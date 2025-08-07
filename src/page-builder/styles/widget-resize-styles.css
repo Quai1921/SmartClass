@@ -1,0 +1,482 @@
+/* ========================================
+   WIDGET RESIZE HANDLES STYLES
+   ======================================== */
+
+/* Base resize handle styles for widgets - Performance Optimized */
+.page-builder .widget-resizable .resize-handle,
+.widget-resizable .resize-handle,
+div.widget-resizable .resize-handle,
+.widget-resizable.selected .resize-handle {
+  position: absolute;
+  background: #3b82f6;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 6px;
+  z-index: 1005;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  transform-origin: center;
+  pointer-events: auto;
+  /* Simplified sizing for better performance */
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  min-height: 16px;
+  max-width: 16px;
+  max-height: 16px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Show handles when parent widget is selected */
+.widget-resizable.selected .resize-handle,
+.widget-resizable.selected div.resize-handle,
+/* Specific rules for text elements to ensure handles are visible */
+.widget-resizable.selected[data-element-type="text"] .resize-handle,
+.widget-resizable.selected[data-element-type="heading"] .resize-handle,
+.widget-resizable.selected[data-element-type="paragraph"] .resize-handle {
+  opacity: 1;
+  visibility: visible;
+  display: block;
+  pointer-events: auto;
+  z-index: 1010;
+}
+
+/* Widget resize handle hover effects - Performance Optimized */
+.widget-resizable .resize-handle:hover {
+  background: #2563eb;
+  box-shadow: 0 3px 12px rgba(59, 130, 246, 0.4);
+  z-index: 1006;
+  transform: scale(1.1);
+  border: 2px solid rgba(255, 255, 255, 1);
+  transition: all 0.15s ease;
+}
+
+.widget-resizable .resize-handle:active {
+  background: #1d4ed8;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.5);
+  transform: scale(1.05);
+  transition: all 0.1s ease;
+}
+
+/* Individual widget resize handle positions */
+/* Individual widget resize handle positions - Performance Optimized */
+.widget-resizable .resize-handle.resize-n,
+div.widget-resizable .resize-handle.resize-n {
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: ns-resize;
+  width: 24px;
+  height: 8px;
+  max-width: 24px;
+  max-height: 8px;
+  border-radius: 4px;
+  background: #3b82f6;
+}
+
+.widget-resizable .resize-handle.resize-ne,
+div.widget-resizable .resize-handle.resize-ne {
+  top: -8px;
+  right: -8px;
+  cursor: nesw-resize;
+  width: 16px;
+  height: 16px;
+  max-width: 16px;
+  max-height: 16px;
+  border-radius: 6px;
+  background: #3b82f6;
+}
+
+.widget-resizable .resize-handle.resize-e,
+div.widget-resizable .resize-handle.resize-e {
+  top: 50%;
+  right: -8px;
+  transform: translateY(-50%);
+  cursor: ew-resize;
+  width: 8px;
+  height: 24px;
+  max-width: 8px;
+  max-height: 24px;
+  border-radius: 4px;
+  background: #3b82f6;
+}
+
+.widget-resizable .resize-handle.resize-se,
+div.widget-resizable .resize-handle.resize-se {
+  bottom: -9px !important;
+  right: -9px !important;
+  cursor: nwse-resize !important;
+  width: 18px !important;
+  height: 18px !important;
+  max-width: 18px !important;
+  max-height: 18px !important;
+  border-radius: 8px !important;
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+}
+
+.widget-resizable .resize-handle.resize-s,
+div.widget-resizable .resize-handle.resize-s {
+  bottom: -9px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  cursor: ns-resize !important;
+  width: 32px !important;
+  height: 12px !important;
+  max-width: 32px !important;
+  max-height: 12px !important;
+  border-radius: 8px !important;
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+}
+
+.widget-resizable .resize-handle.resize-sw,
+div.widget-resizable .resize-handle.resize-sw {
+  bottom: -9px !important;
+  left: -9px !important;
+  cursor: nesw-resize !important;
+  width: 18px !important;
+  height: 18px !important;
+  max-width: 18px !important;
+  max-height: 18px !important;
+  border-radius: 8px !important;
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+}
+
+.widget-resizable .resize-handle.resize-w,
+div.widget-resizable .resize-handle.resize-w {
+  top: 50% !important;
+  left: -9px !important;
+  transform: translateY(-50%) !important;
+  cursor: ew-resize !important;
+  width: 12px !important;
+  height: 32px !important;
+  max-width: 12px !important;
+  max-height: 32px !important;
+  border-radius: 8px !important;
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+}
+
+.widget-resizable .resize-handle.resize-nw,
+div.widget-resizable .resize-handle.resize-nw {
+  top: -9px !important;
+  left: -9px !important;
+  cursor: nwse-resize !important;
+  width: 18px !important;
+  height: 18px !important;
+  max-width: 18px !important;
+  max-height: 18px !important;
+  border-radius: 8px !important;
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+}
+
+/* Widget resize handle hover effects with proper transforms */
+.widget-resizable .resize-handle.resize-n:hover,
+.widget-resizable .resize-handle.resize-s:hover {
+  transform: translateX(-50%) scale(1.08) !important;
+}
+
+.widget-resizable .resize-handle.resize-e:hover,
+.widget-resizable .resize-handle.resize-w:hover {
+  transform: translateY(-50%) scale(1.08) !important;
+}
+
+.widget-resizable .resize-handle.resize-n:active,
+.widget-resizable .resize-handle.resize-s:active {
+  transform: translateX(-50%) scale(0.98) !important;
+}
+
+.widget-resizable .resize-handle.resize-e:active,
+.widget-resizable .resize-handle.resize-w:active {
+  transform: translateY(-50%) scale(0.98) !important;
+}
+
+/* Widget corner handles hover/active states */
+.widget-resizable .resize-handle.resize-ne:hover,
+.widget-resizable .resize-handle.resize-se:hover,
+.widget-resizable .resize-handle.resize-sw:hover,
+.widget-resizable .resize-handle.resize-nw:hover {
+  transform: scale(1.08) !important;
+}
+
+.widget-resizable .resize-handle.resize-ne:active,
+.widget-resizable .resize-handle.resize-se:active,
+.widget-resizable .resize-handle.resize-sw:active,
+.widget-resizable .resize-handle.resize-nw:active {
+  transform: scale(0.98) !important;
+}
+
+/* Reposition handle (BLUE handle for widgets in containers) */
+.page-builder .widget-reposition-handle-debug,
+.page-builder .reposition-handle,
+.resizable-container .widget-reposition-handle-debug,
+.resizable-container .reposition-handle,
+.resizable-container.selected .widget-reposition-handle-debug,
+.resizable-container.selected .reposition-handle,
+div.widget-reposition-handle-debug,
+div.reposition-handle,
+.page-builder div.widget-reposition-handle-debug,
+.page-builder div.reposition-handle,
+.resizable-container div.widget-reposition-handle-debug,
+.resizable-container div.reposition-handle,
+.resizable-container.selected div.widget-reposition-handle-debug,
+.resizable-container.selected div.reposition-handle {
+  position: absolute !important;
+  top: -18px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 32px !important;
+  height: 18px !important;
+  min-width: 32px !important;
+  min-height: 18px !important;
+  max-width: 32px !important;
+  max-height: 18px !important;
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+  border: 2px solid rgba(255, 255, 255, 0.9) !important;
+  cursor: move !important;
+  border-radius: 6px !important;
+  z-index: 10004 !important;
+  box-shadow: 
+    0 2px 8px rgba(59, 130, 246, 0.3), 
+    0 1px 4px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  color: white !important;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  user-select: none !important;
+  /* Ensure proper box model */
+  box-sizing: border-box !important;
+  /* Reset any inherited properties */
+  margin: 0 !important;
+  padding: 0 !important;
+  outline: none !important;
+  overflow: hidden !important;
+}
+
+.page-builder .reposition-handle.repositioning,
+.resizable-container .reposition-handle.repositioning,
+.resizable-container.selected .reposition-handle.repositioning,
+div.reposition-handle.repositioning,
+.page-builder div.reposition-handle.repositioning,
+.resizable-container div.reposition-handle.repositioning,
+.resizable-container.selected div.reposition-handle.repositioning {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
+  transform: translateX(-50%) scale(1.1) !important;
+  box-shadow: 
+    0 3px 12px rgba(59, 130, 246, 0.5), 
+    0 2px 6px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+  border: 2px solid rgba(255, 255, 255, 1) !important;
+}
+
+.page-builder .widget-reposition-handle-debug:hover,
+.page-builder .reposition-handle:hover,
+.resizable-container .widget-reposition-handle-debug:hover,
+.resizable-container .reposition-handle:hover,
+.resizable-container.selected .widget-reposition-handle-debug:hover,
+.resizable-container.selected .reposition-handle:hover,
+div.widget-reposition-handle-debug:hover,
+div.reposition-handle:hover,
+.page-builder div.widget-reposition-handle-debug:hover,
+.page-builder div.reposition-handle:hover,
+.resizable-container div.widget-reposition-handle-debug:hover,
+.resizable-container div.reposition-handle:hover,
+.resizable-container.selected div.widget-reposition-handle-debug:hover,
+.resizable-container.selected div.reposition-handle:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
+  transform: translateX(-50%) scale(1.15) !important;
+  box-shadow: 
+    0 3px 12px rgba(59, 130, 246, 0.4), 
+    0 2px 6px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border: 2px solid rgba(255, 255, 255, 1) !important;
+}
+
+.page-builder .widget-reposition-handle-debug:active,
+.page-builder .reposition-handle:active,
+.resizable-container .widget-reposition-handle-debug:active,
+.resizable-container .reposition-handle:active,
+.resizable-container.selected .widget-reposition-handle-debug:active,
+.resizable-container.selected .reposition-handle:active,
+div.widget-reposition-handle-debug:active,
+div.reposition-handle:active,
+.page-builder div.widget-reposition-handle-debug:active,
+.page-builder div.reposition-handle:active,
+.resizable-container div.reposition-handle-debug:active,
+.resizable-container div.reposition-handle:active,
+.resizable-container.selected div.widget-reposition-handle-debug:active,
+.resizable-container.selected div.reposition-handle:active {
+  transform: translateX(-50%) scale(0.95) !important;
+  box-shadow: 
+    0 2px 8px rgba(59, 130, 246, 0.5), 
+    0 1px 4px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+/* ========================================
+   MAXIMUM SPECIFICITY OVERRIDES FOR REPOSITION HANDLE
+   ======================================== */
+
+/* Force BLUE reposition handle styles with maximum specificity */
+.page-builder .resizable-container.selected div.widget-reposition-handle-debug,
+.page-builder .resizable-container div.widget-reposition-handle-debug,
+.resizable-container.selected div.widget-reposition-handle-debug,
+.page-builder .resizable-container.selected div.reposition-handle,
+.page-builder .resizable-container div.reposition-handle,
+.resizable-container.selected div.reposition-handle,
+body .page-builder .widget-reposition-handle-debug,
+body .resizable-container .widget-reposition-handle-debug,
+body .page-builder .reposition-handle,
+body .resizable-container .reposition-handle,
+html body .widget-reposition-handle-debug,
+html body .reposition-handle {
+  position: absolute !important;
+  top: -18px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 32px !important;
+  height: 18px !important;
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+  border: 2px solid rgba(255, 255, 255, 0.95) !important;
+  cursor: move !important;
+  border-radius: 6px !important;
+  z-index: 10004 !important;
+  box-shadow: 
+    0 2px 8px rgba(59, 130, 246, 0.3), 
+    0 1px 3px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: white !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  user-select: none !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  outline: none !important;
+  overflow: hidden !important;
+}
+
+/* Force hover states */
+.page-builder .resizable-container.selected div.widget-reposition-handle-debug:hover,
+.page-builder .resizable-container div.widget-reposition-handle-debug:hover,
+.resizable-container.selected div.widget-reposition-handle-debug:hover,
+.page-builder .resizable-container.selected div.reposition-handle:hover,
+.page-builder .resizable-container div.reposition-handle:hover,
+.resizable-container.selected div.reposition-handle:hover,
+body .page-builder .widget-reposition-handle-debug:hover,
+body .resizable-container .widget-reposition-handle-debug:hover,
+body .page-builder .reposition-handle:hover,
+body .resizable-container .reposition-handle:hover,
+html body .widget-reposition-handle-debug:hover,
+html body .reposition-handle:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
+  transform: translateX(-50%) scale(1.15) !important;
+  box-shadow: 
+    0 4px 12px rgba(59, 130, 246, 0.4), 
+    0 2px 6px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+  border: 2px solid rgba(255, 255, 255, 1) !important;
+}
+
+/* Force active states */
+.page-builder .resizable-container.selected div.widget-reposition-handle-debug:active,
+.page-builder .resizable-container div.widget-reposition-handle-debug:active,
+.resizable-container.selected div.widget-reposition-handle-debug:active,
+.page-builder .resizable-container.selected div.reposition-handle:active,
+.page-builder .resizable-container div.reposition-handle:active,
+.resizable-container.selected div.reposition-handle:active,
+body .page-builder .widget-reposition-handle-debug:active,
+body .resizable-container .widget-reposition-handle-debug:active,
+body .page-builder .reposition-handle:active,
+body .resizable-container .reposition-handle:active,
+html body .widget-reposition-handle-debug:active,
+html body .reposition-handle:active {
+  transform: translateX(-50%) scale(0.95) !important;
+  box-shadow: 
+    0 2px 8px rgba(59, 130, 246, 0.5), 
+    0 1px 4px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Force repositioning state */
+.page-builder .resizable-container.selected div.reposition-handle.repositioning,
+.page-builder .resizable-container div.reposition-handle.repositioning,
+.resizable-container.selected div.reposition-handle.repositioning,
+body .page-builder .reposition-handle.repositioning,
+body .resizable-container .reposition-handle.repositioning,
+html body .reposition-handle.repositioning {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
+  transform: translateX(-50%) scale(1.15) !important;
+  box-shadow: 
+    0 4px 12px rgba(59, 130, 246, 0.4), 
+    0 2px 6px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+  border: 2px solid rgba(255, 255, 255, 1) !important;
+}
+
+/* WIDGET RESIZE HANDLES - INVISIBLE HIT AREAS */
+
+/* Add larger invisible hit areas for better responsiveness */
+.widget-resizable .resize-handle::before {
+  content: '' !important;
+  position: absolute !important;
+  top: -4px !important;
+  right: -4px !important;
+  bottom: -4px !important;
+  left: -4px !important;
+  z-index: -1 !important;
+  pointer-events: auto !important;
+  cursor: inherit !important;
+}
+
+/* Larger hit areas for widget edge handles */
+.widget-resizable .resize-handle.resize-n::before,
+.widget-resizable .resize-handle.resize-s::before {
+  top: -6px !important;
+  bottom: -6px !important;
+  left: -8px !important;
+  right: -8px !important;
+}
+
+.widget-resizable .resize-handle.resize-e::before,
+.widget-resizable .resize-handle.resize-w::before {
+  top: -8px !important;
+  bottom: -8px !important;
+  left: -6px !important;
+  right: -6px !important;
+}
+
+/* Widget corner handles get slightly larger hit areas */
+.widget-resizable .resize-handle.resize-ne::before,
+.widget-resizable .resize-handle.resize-nw::before,
+.widget-resizable .resize-handle.resize-se::before,
+.widget-resizable .resize-handle.resize-sw::before {
+  top: -6px !important;
+  right: -6px !important;
+  bottom: -6px !important;
+  left: -6px !important;
+}
+
+/* Larger hit area for reposition handle */
+.reposition-handle::before {
+  content: '' !important;
+  position: absolute !important;
+  top: -6px !important;
+  right: -8px !important;
+  bottom: -6px !important;
+  left: -8px !important;
+  z-index: -1 !important;
+  pointer-events: auto !important;
+  cursor: move !important;
+}

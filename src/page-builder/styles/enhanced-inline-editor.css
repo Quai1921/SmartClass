@@ -1,0 +1,320 @@
+/* Enhanced Inline Editor Styles */
+.enhanced-inline-editor {
+  background: #1f2937;
+  color: #f9fafb;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Prevent line breaks in the editor content when applying formatting */
+.enhanced-inline-editor .editor-content span,
+.enhanced-inline-editor .editor-content strong,
+.enhanced-inline-editor .editor-content em,
+.enhanced-inline-editor .editor-content u {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: inherit !important;
+  white-space: normal !important;
+  vertical-align: baseline !important;
+}
+
+/* Additional rules for contentEditable div */
+.enhanced-inline-editor .editor-content [contenteditable] span,
+.enhanced-inline-editor .editor-content [contenteditable] strong,
+.enhanced-inline-editor .editor-content [contenteditable] em,
+.enhanced-inline-editor .editor-content [contenteditable] u {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: inherit !important;
+  white-space: normal !important;
+  vertical-align: baseline !important;
+  word-wrap: normal !important;
+  word-break: normal !important;
+}
+
+/* Prevent line breaks in quote elements when applying formatting */
+.quote-no-line-breaks span,
+.quote-no-line-breaks strong,
+.quote-no-line-breaks em,
+.quote-no-line-breaks u {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: inherit !important;
+  white-space: normal !important;
+  vertical-align: baseline !important;
+}
+
+/* Enhanced formatting toolbar styles */
+.enhanced-formatting-toolbar {
+  background: #374151;
+  border-bottom: 1px solid #4b5563;
+  padding: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  overflow-x: auto;
+}
+
+.enhanced-formatting-toolbar::-webkit-scrollbar {
+  height: 4px;
+}
+
+.enhanced-formatting-toolbar::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+.enhanced-formatting-toolbar::-webkit-scrollbar-thumb {
+  background: #4b5563;
+  border-radius: 2px;
+}
+
+.enhanced-formatting-toolbar::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+/* Word count display */
+.enhanced-formatting-toolbar .word-count {
+  font-size: 11px;
+  color: #9ca3af;
+  white-space: nowrap;
+}
+
+/* Enhanced button styles */
+.enhanced-formatting-toolbar button {
+  transition: all 0.2s ease;
+  min-width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.enhanced-formatting-toolbar button:hover:not(:disabled) {
+  background-color: #4b5563;
+  transform: translateY(-1px);
+}
+
+.enhanced-formatting-toolbar button:active {
+  transform: translateY(0);
+}
+
+.enhanced-formatting-toolbar button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Typography controls styling */
+.formatting-toolbar select {
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.formatting-toolbar select:hover:not(:disabled) {
+  background-color: #4b5563 !important;
+  border-color: #6b7280 !important;
+}
+
+.formatting-toolbar select:focus {
+  outline: none;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.formatting-toolbar select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Ensure nested spans work properly with multiple styles */
+.enhanced-inline-editor .editor-content span span {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: inherit !important;
+  white-space: normal !important;
+  vertical-align: baseline !important;
+}
+
+/* Ensure inline elements don't cause line breaks in any text elements while preserving styling */
+blockquote[data-element-type="quote"] span,
+blockquote[data-element-type="quote"] strong,
+blockquote[data-element-type="quote"] em,
+blockquote[data-element-type="quote"] u,
+p[data-element-type="paragraph"] span,
+p[data-element-type="paragraph"] strong,
+p[data-element-type="paragraph"] em,
+p[data-element-type="paragraph"] u {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: inherit !important;
+  white-space: normal !important;
+  vertical-align: baseline !important;
+  /* PRESERVE STYLING: Don't override background, color, text-decoration, font-weight, font-style */
+}
+
+/* Ensure nested spans work properly in rendered content while preserving styling */
+blockquote[data-element-type="quote"] span span,
+p[data-element-type="paragraph"] span span {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: inherit !important;
+  white-space: normal !important;
+  vertical-align: baseline !important;
+  /* PRESERVE STYLING: Don't override background, color, text-decoration, font-weight, font-style */
+}
+
+.formatting-toolbar {
+  background: #374151;
+  border-bottom: 1px solid #4b5563;
+  padding: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+
+.editor-content {
+  flex: 1;
+  padding: 16px;
+}
+
+.preview-content {
+  min-height: 200px;
+  padding: 12px;
+  border: 1px solid #374151;
+  border-radius: 6px;
+  background-color: #111827;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #f9fafb;
+  overflow: auto;
+}
+
+/* ContentEditable placeholder styling */
+[contenteditable]:empty:before {
+  content: attr(data-placeholder);
+  color: #9ca3af;
+  font-style: italic;
+  pointer-events: none;
+}
+
+[contenteditable]:focus:empty:before {
+  content: none;
+}
+
+/* Basic formatting styles */
+.enhanced-inline-editor strong {
+  font-weight: bold;
+}
+
+.enhanced-inline-editor em {
+  font-style: italic;
+}
+
+.enhanced-inline-editor u {
+  text-decoration: underline;
+}
+
+.enhanced-inline-editor a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.enhanced-inline-editor a:hover {
+  color: #1d4ed8;
+}
+
+/* Toolbar button styles */
+.formatting-toolbar button {
+  transition: all 0.2s ease;
+}
+
+.formatting-toolbar button:hover:not(:disabled) {
+  background-color: #e5e7eb;
+}
+
+.formatting-toolbar button:active {
+  transform: scale(0.95);
+}
+
+/* Modal styles */
+.enhanced-inline-editor .modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.enhanced-inline-editor .modal-content {
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+  max-width: 400px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .enhanced-inline-editor .formatting-toolbar {
+    padding: 6px;
+    gap: 2px;
+  }
+  
+  .enhanced-inline-editor .formatting-toolbar button {
+    padding: 6px;
+  }
+  
+  .enhanced-inline-editor .formatting-toolbar svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Specific rules for styled spans in paragraphs to prevent full-width background expansion */
+p[data-element-type="paragraph"] span[style*="background"],
+div[data-element-type="paragraph"] span[style*="background"] {
+  display: inline !important;
+  width: auto !important;
+  max-width: none !important;
+  box-sizing: content-box !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  /* Preserve background styling */
+}
+
+/* Ensure nested formatted spans maintain inline behavior */
+p[data-element-type="paragraph"] span span[style*="background"],
+div[data-element-type="paragraph"] span span[style*="background"] {
+  display: inline !important;
+  width: auto !important;
+  max-width: none !important;
+  box-sizing: content-box !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  /* Preserve background styling */
+}
+
+/* Force all spans in paragraphs to be truly inline */
+p[data-element-type="paragraph"] span,
+div[data-element-type="paragraph"] span {
+  display: inline !important;
+  width: auto !important;
+  float: none !important;
+  clear: none !important;
+  position: static !important;
+}

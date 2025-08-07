@@ -1,0 +1,163 @@
+/* Enhanced Flexbox Controls Styles */
+
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: #4B5563;
+  cursor: pointer;
+  height: 12px;
+  border-radius: 6px;
+  border: 1px solid #6B7280;
+  width: 100%;
+  outline: none;
+  position: relative;
+}
+
+.slider::-webkit-slider-track {
+  background: #4B5563;
+  height: 12px;
+  border-radius: 6px;
+  border: 1px solid #6B7280;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background: #3B82F6;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #1E293B;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  margin-top: -5px; /* Mathematically precise centering */
+}
+
+.slider::-webkit-slider-thumb:hover {
+  background: #2563EB;
+  transform: scale(1.2);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+}
+
+.slider:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+  background: #4B5563;
+}
+
+.slider::-moz-range-track {
+  background: #4B5563;
+  height: 12px;
+  border-radius: 6px;
+  border: 1px solid #6B7280;
+}
+
+.slider::-moz-range-thumb {
+  background: #3B82F6;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid #1E293B;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  -moz-appearance: none;
+}
+
+.slider::-moz-range-thumb:hover {
+  background: #2563EB;
+  transform: scale(1.2);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Enhanced button hover effects */
+.property-section button {
+  transition: all 0.2s ease-in-out;
+}
+
+.property-section button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.property-section button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Visual indicator animations */
+.property-section .w-2.h-2,
+.property-section .w-2.h-3,
+.property-section .w-2.h-4 {
+  transition: all 0.3s ease;
+}
+
+.property-section button:hover .w-2.h-2,
+.property-section button:hover .w-2.h-3,
+.property-section button:hover .w-2.h-4 {
+  transform: scale(1.1);
+}
+
+/* Border Radius Slider Styles */
+.border-radius-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: #4B5563;
+  cursor: pointer;
+  height: 8px;
+  border-radius: 4px;
+  border: 1px solid #6B7280;
+  width: 100%;
+  outline: none;
+}
+
+.border-radius-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background: #4f46e5;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #1E293B;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.15s ease;
+  margin-top: -6px;
+}
+
+.border-radius-slider::-webkit-slider-thumb:hover {
+  background: #4338ca;
+  transform: scale(1.1);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+.border-radius-slider:focus {
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.4);
+}
+
+.border-radius-slider::-moz-range-track {
+  background: #4B5563;
+  height: 8px;
+  border-radius: 4px;
+  border: 1px solid #6B7280;
+}
+
+.border-radius-slider::-moz-range-thumb {
+  background: #4f46e5;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #1E293B;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.15s ease;
+}
+
+.border-radius-slider::-moz-range-thumb:hover {
+  background: #4338ca;
+  transform: scale(1.1);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+}

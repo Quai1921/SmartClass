@@ -1,0 +1,623 @@
+/* ========================================
+   DRAG & DROP STYLES
+   ======================================== */
+
+/* Drag performance optimizations - Minimal required styles for drag overlay */
+.page-builder [data-dnd-kit-drag-overlay],
+[data-dnd-kit-drag-overlay] {
+  will-change: transform;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  z-index: 10002 !important;
+  pointer-events: none;
+}
+
+/* Prevent drag overlay from intercepting pointer events */
+.page-builder [data-dnd-kit-drag-overlay] {
+  pointer-events: none !important;
+}
+
+/* Hide drag overlay for drop-area-widget elements */
+.page-builder [data-dnd-kit-drag-overlay][data-widget-type="drop-area-widget"],
+[data-dnd-kit-drag-overlay][data-widget-type="drop-area-widget"],
+.page-builder [data-dnd-kit-drag-overlay][data-widget-type="drop-area"],
+[data-dnd-kit-drag-overlay][data-widget-type="drop-area"],
+.page-builder [data-dnd-kit-drag-overlay][data-widget-type="drop-area-content"],
+[data-dnd-kit-drag-overlay][data-widget-type="drop-area-content"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Hide drag overlay for elements with drop-area-widget data type */
+.page-builder [data-dnd-kit-drag-overlay] [data-widget-type="drop-area-widget"],
+[data-dnd-kit-drag-overlay] [data-widget-type="drop-area-widget"],
+.page-builder [data-dnd-kit-drag-overlay] [data-widget-type="drop-area"],
+[data-dnd-kit-drag-overlay] [data-widget-type="drop-area"],
+.page-builder [data-dnd-kit-drag-overlay] [data-widget-type="drop-area-content"],
+[data-dnd-kit-drag-overlay] [data-widget-type="drop-area-content"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Hide entire drag overlay when dragging drop-area-widget elements */
+.page-builder [data-dnd-kit-drag-overlay]:has([data-widget-type="drop-area-widget"]),
+[data-dnd-kit-drag-overlay]:has([data-widget-type="drop-area-widget"]),
+.page-builder [data-dnd-kit-drag-overlay]:has([data-widget-type="drop-area"]),
+[data-dnd-kit-drag-overlay]:has([data-widget-type="drop-area"]),
+.page-builder [data-dnd-kit-drag-overlay]:has([data-widget-type="drop-area-content"]),
+[data-dnd-kit-drag-overlay]:has([data-widget-type="drop-area-content"]) {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Alternative approach: Hide drag overlay when the active element is a drop-area-widget */
+/* Empty rule removed - was causing lint errors */
+
+/* Force hide drag overlay for drop-area-widget */
+.page-builder [data-dnd-kit-drag-overlay][style*="drop-area-widget"],
+[data-dnd-kit-drag-overlay][style*="drop-area-widget"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Nuclear option: Hide ALL drag overlays when drop-area-widget is being dragged */
+.page-builder:has([data-widget-type="drop-area-widget"][data-dnd-kit-dragging="true"]) [data-dnd-kit-drag-overlay],
+.page-builder:has([data-element-type="drop-area-widget"][data-dnd-kit-dragging="true"]) [data-dnd-kit-drag-overlay],
+.page-builder:has([data-widget-type="drop-area"][data-dnd-kit-dragging="true"]) [data-dnd-kit-drag-overlay],
+.page-builder:has([data-element-type="drop-area"][data-dnd-kit-dragging="true"]) [data-dnd-kit-drag-overlay] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+}
+
+/* Alternative: Hide drag overlay when the dragged element has drop-area-widget type */
+.page-builder [data-dnd-kit-drag-overlay]:has([data-widget-type="drop-area-widget"]),
+.page-builder [data-dnd-kit-drag-overlay]:has([data-element-type="drop-area-widget"]),
+.page-builder [data-dnd-kit-drag-overlay]:has([data-widget-type="drop-area"]),
+.page-builder [data-dnd-kit-drag-overlay]:has([data-element-type="drop-area"]) {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+}
+
+/* Most aggressive: Hide any drag overlay that might contain drop-area content */
+/* Empty rule removed - was causing lint errors */
+
+/* Force hide drag overlay when active element is drop-area */
+.page-builder[data-active-element-type="drop-area"] [data-dnd-kit-drag-overlay],
+.page-builder[data-active-element-type="drop-area-widget"] [data-dnd-kit-drag-overlay] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Basic drag overlay content styling */
+.page-builder [data-dnd-kit-drag-overlay] > *,
+[data-dnd-kit-drag-overlay] > * {
+  box-sizing: border-box;
+}
+
+/* Smooth drag handle transitions */
+.element-wrapper .drag-handle {
+  will-change: transform, opacity, background-color;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* Universal drag handle styles for both widgets and containers */
+.drag-handle,
+.reposition-handle.drag-handle,
+.container-reposition-handle.drag-handle {
+  position: absolute !important;
+  z-index: 100000 !important;
+  background-color: #3b82f6 !important;
+  background: #3b82f6 !important; /* Override any gradient backgrounds */
+  border: 2px solid rgba(255, 255, 255, 0.7) !important;
+  border-radius: 8px !important;
+  padding: 8px !important;
+  min-width: 32px !important;
+  min-height: 32px !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: none !important;
+  max-height: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: grab !important;
+  user-select: none !important;
+  pointer-events: auto !important;
+  opacity: 0.7 !important;
+  backdrop-filter: blur(8px) !important;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3), 0 2px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Hover state for drag handles */
+.drag-handle:hover,
+.reposition-handle.drag-handle:hover,
+.container-reposition-handle.drag-handle:hover {
+  opacity: 1 !important;
+  background-color: #3b82f6 !important;
+  background: #3b82f6 !important;
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4), 0 3px 10px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Active/dragging state for drag handles */
+.drag-handle:active,
+.drag-handle.dragging,
+.reposition-handle.drag-handle:active,
+.container-reposition-handle.drag-handle:active {
+  background-color: #1d4ed8 !important;
+  background: #1d4ed8 !important;
+  border: 2px solid rgba(255, 255, 255, 0.9) !important;
+  cursor: grabbing !important;
+  transition: none !important;
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4), 0 4px 12px rgba(29, 78, 216, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Selected element drag handle visibility */
+.element-wrapper.selected .drag-handle,
+.resizable-container.selected .drag-handle {
+  opacity: 1;
+}
+
+/* Prevent text selection during drag operations */
+.page-builder * {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Allow text selection in input fields */
+.page-builder input,
+.page-builder textarea,
+.page-builder [contenteditable="true"] {
+  user-select: auto;
+  -webkit-user-select: auto;
+  -moz-user-select: auto;
+  -ms-user-select: auto;
+}
+
+/* Special handling for element wrappers during drag */
+.element-wrapper.is-dragging {
+  overflow: visible !important; /* Allow drag preview to show */
+  z-index: 1000; /* Ensure dragged element appears above others */
+}
+
+/* Drop indicator styling */
+.drop-indicator {
+  position: absolute;
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+  border: 2px solid #1d4ed8;
+  border-radius: 6px;
+  z-index: 10003 !important;
+  pointer-events: none;
+  opacity: 0.8;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+  /* Removed animation for better performance */
+}
+
+.drop-indicator {
+  display: none !important;
+}
+
+/* Drag handle styles */
+.drag-handle {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  border: 2px solid white;
+  border-radius: 50%;
+  cursor: move;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+  transition: all 0.2s ease;
+}
+
+.drag-handle:hover {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  transform: translateX(-50%) scale(1.1);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.6);
+}
+
+.drag-handle:active {
+  transform: translateX(-50%) scale(0.95);
+}
+
+/* ========================================
+   ACTUAL ELEMENT DRAGGING STYLES
+   ======================================== */
+
+/* Styles for elements being dragged (not overlay) */
+[data-dnd-kit-dragging="true"] {
+  /* Enhanced visual feedback for the actual dragged element */
+  box-shadow: 
+    0 15px 40px rgba(0, 0, 0, 0.4), 
+    0 8px 20px rgba(0, 0, 0, 0.3),
+    0 0 0 2px rgba(59, 130, 246, 0.8) !important;
+  z-index: 10001 !important;
+  opacity: 0.95 !important;
+  transition: none !important; /* Disable transitions during drag for better performance */
+  border-radius: 8px !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(8px) !important;
+  /* Note: transform is handled by individual components through inline styles */
+}
+
+/* Performance optimization: Hide original element during drag */
+[data-dnd-kit-dragging="true"] {
+  opacity: 0.3 !important;
+  /* REMOVED: pointer-events: none !important; - This was breaking drag functionality */
+  transform: scale(0.98) !important;
+  transition: opacity 0.2s ease, transform 0.2s ease !important;
+}
+
+/* Override dragging styles for containers - keep them in place and visible */
+.resizable-container[data-dnd-kit-dragging="true"] {
+  opacity: 0.95 !important; /* Make containers visible during drag */
+  transform: none !important;
+  pointer-events: auto !important;
+  position: relative !important;
+  box-shadow: 
+    0 15px 40px rgba(0, 0, 0, 0.4), 
+    0 8px 20px rgba(0, 0, 0, 0.3),
+    0 0 0 2px rgba(59, 130, 246, 0.8) !important;
+  z-index: 10001 !important;
+  border-radius: 8px !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+/* Widget-specific dragging styles - removed conflicting blue border */
+.widget-resizable[data-dnd-kit-dragging="true"] {
+  background: rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Container-specific dragging styles */
+.element-container[data-dnd-kit-dragging="true"] {
+  border: 3px solid #3b82f6 !important;
+  background: rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Handle drag vs body drag visual differences */
+.widget-resizable[data-dnd-kit-dragging="true"][data-drag-source="handle"] {
+  /* Handle drag - move mode (green accent) */
+  box-shadow: 
+    0 15px 40px rgba(0, 0, 0, 0.4), 
+    0 8px 20px rgba(0, 0, 0, 0.3),
+    0 0 0 3px rgba(34, 197, 94, 0.8) !important;
+  border-color: #22c55e !important;
+}
+
+.widget-resizable[data-dnd-kit-dragging="true"][data-drag-source="body"] {
+  /* Body drag - neutral styling (no orange, let constraint classes handle styling) */
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.3), 
+    0 5px 15px rgba(0, 0, 0, 0.2);
+  /* Removed orange border - constraint styling will handle red border when needed */
+}
+
+/* Dragging from sidebar - new element styles */
+[data-dnd-kit-dragging="true"][data-drag-source="sidebar"] {
+  box-shadow: 
+    0 15px 40px rgba(0, 0, 0, 0.4), 
+    0 8px 20px rgba(0, 0, 0, 0.3),
+    0 0 0 3px rgba(59, 130, 246, 0.8) !important;
+  border-color: #3b82f6 !important;
+  background: rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Sidebar element dragging styles */
+[data-drag-source="sidebar"][data-dnd-kit-dragging="true"] {
+  transform: scale(0.95) rotate(1deg) !important;
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.3), 
+    0 4px 12px rgba(0, 0, 0, 0.2),
+    0 0 0 2px rgba(59, 130, 246, 0.8) !important;
+  z-index: 10001 !important;
+  opacity: 0.9 !important;
+  border-color: #3b82f6 !important;
+  background: rgba(59, 130, 246, 0.2) !important;
+}
+
+/* Disable pointer events on children during drag to prevent interference */
+/* COMMENTED OUT: This was preventing proper drag repositioning
+[data-dnd-kit-dragging="true"] * {
+  pointer-events: none !important;
+}
+*/
+
+/* Allow the drag handle to remain interactive */
+[data-dnd-kit-dragging="true"] .widget-reposition-handle-debug {
+  pointer-events: auto !important;
+}
+
+/* Add subtle pulsing animation to indicate active drag */
+@keyframes dragPulse {
+  0%, 100% { 
+    box-shadow: 
+      0 15px 40px rgba(0, 0, 0, 0.4), 
+      0 8px 20px rgba(0, 0, 0, 0.3),
+      0 0 0 2px rgba(59, 130, 246, 0.8);
+  }
+  50% { 
+    box-shadow: 
+      0 20px 50px rgba(0, 0, 0, 0.5), 
+      0 12px 25px rgba(0, 0, 0, 0.4),
+      0 0 0 4px rgba(59, 130, 246, 1);
+  }
+}
+
+[data-dnd-kit-dragging="true"] {
+  animation: dragPulse 1.5s ease-in-out infinite;
+}
+
+/* ========================================
+   MANUAL DRAG WIDGET STYLES
+   ======================================== */
+
+/* Manual drag widget in repositioning state */
+.widget-resizable.repositioning {
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  z-index: 1000 !important;
+  pointer-events: auto;
+  transition: none; /* Disable transitions during drag */
+  opacity: 0.7;
+  animation: pulse 1s ease-in-out infinite alternate;
+}
+
+/* Pulse animation for dragging elements */
+@keyframes pulse {
+  0% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0.9;
+  }
+}
+
+/* Manual drag widget default state */
+.widget-resizable[data-manual-drag="true"] {
+  will-change: auto;
+  transform-style: flat;
+}
+
+/* Prevent text selection during manual drag */
+.widget-resizable.repositioning * {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+/* ========================================
+   DRAG AFFORDANCE STYLES
+   ======================================== */
+
+/* Make elements show they're draggable */
+.widget-resizable:hover {
+  cursor: grab;
+}
+
+.widget-resizable:active {
+  cursor: grabbing;
+}
+
+/* Drag handle cursors */
+.reposition-handle {
+  cursor: grab;
+}
+
+.reposition-handle:hover {
+  cursor: grab;
+}
+
+.reposition-handle:active {
+  cursor: grabbing;
+}
+
+/* Canvas-level elements should show they're draggable */
+.canvas-content > .elements-container > .widget-resizable {
+  cursor: grab;
+}
+
+.canvas-content > .elements-container > .widget-resizable:active {
+  cursor: grabbing;
+}
+
+/* Debug styles for draggable elements */
+.widget-resizable[data-drag-source="body"]::before {
+  content: "📍";
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  font-size: 12px;
+  z-index: 1001;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.widget-resizable[data-drag-source="handle"]::after {
+  content: "🎯";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 12px;
+  z-index: 1001;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* Remove debug indicators in production */
+.page-builder:not(.debug) .widget-resizable::before,
+.page-builder:not(.debug) .widget-resizable::after {
+  display: none;
+}
+
+/* ========================================
+   CONSTRAINT FEEDBACK ANIMATIONS
+   ======================================== */
+
+/* Pulsating red border animation for constrained drags */
+@keyframes pulseRed {
+  0% {
+    border-color: #ef4444;
+    box-shadow: 0 0 4px rgba(239, 68, 68, 0.2);
+  }
+  100% {
+    border-color: #dc2626;
+    box-shadow: 0 0 12px rgba(220, 38, 38, 0.5);
+  }
+}
+
+/* Horizontal constraint animation */
+@keyframes pulseRedHorizontal {
+  0% {
+    border-left-color: #ef4444;
+    border-right-color: #ef4444;
+    box-shadow: -3px 0 6px rgba(239, 68, 68, 0.2), 3px 0 6px rgba(239, 68, 68, 0.2);
+  }
+  100% {
+    border-left-color: #dc2626;
+    border-right-color: #dc2626;
+    box-shadow: -6px 0 12px rgba(220, 38, 38, 0.5), 6px 0 12px rgba(220, 38, 38, 0.5);
+  }
+}
+
+/* Vertical constraint animation */
+@keyframes pulseRedVertical {
+  0% {
+    border-top-color: #ef4444;
+    border-bottom-color: #ef4444;
+    box-shadow: 0 -3px 6px rgba(239, 68, 68, 0.2), 0 3px 6px rgba(239, 68, 68, 0.2);
+  }
+  100% {
+    border-top-color: #dc2626;
+    border-bottom-color: #dc2626;
+    box-shadow: 0 -6px 12px rgba(220, 38, 38, 0.5), 0 6px 12px rgba(220, 38, 38, 0.5);
+  }
+}
+
+/* HIGHEST PRIORITY constraint styles to override all other drag styling */
+.widget-resizable[data-dnd-kit-dragging="true"].widget-constrained,
+.widget-resizable.widget-constrained {
+  border: 2px solid #ef4444 !important;
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.3), 
+    0 5px 15px rgba(0, 0, 0, 0.2),
+    0 0 12px rgba(239, 68, 68, 0.6) !important;
+  background: rgba(239, 68, 68, 0.05) !important;
+}
+
+.widget-resizable[data-dnd-kit-dragging="true"].widget-constrained,
+.widget-resizable.widget-constrained {
+  animation: pulseRed 0.6s ease-in-out infinite alternate !important;
+}
+
+.widget-resizable[data-dnd-kit-dragging="true"].widget-constrained-horizontal,
+.widget-resizable.widget-constrained-horizontal {
+  animation: pulseRedHorizontal 0.6s ease-in-out infinite alternate !important;
+  border-left: 2px solid #ef4444 !important;
+  border-right: 2px solid #ef4444 !important;
+}
+
+.widget-resizable[data-dnd-kit-dragging="true"].widget-constrained-vertical,
+.widget-resizable.widget-constrained-vertical {
+  animation: pulseRedVertical 0.6s ease-in-out infinite alternate !important;
+  border-top: 2px solid #ef4444 !important;
+  border-bottom: 2px solid #ef4444 !important;
+}
+
+/* ========================================
+   STANDALONE WIDGET DRAG STYLES
+   ======================================== */
+
+/* Let standalone widgets handle their own transforms via JavaScript */
+.standalone-dragging {
+  /* Remove any unwanted CSS transforms/scaling that might interfere */
+  scale: 1 !important;
+}
+
+/* Ensure no child elements get transformed */
+.standalone-dragging * {
+  transform: none !important;
+  scale: 1 !important;
+}
+
+/* DRAG OVERLAY FIX: Ensure interactive widgets show full content in drag overlay */
+.page-builder [data-dnd-kit-drag-overlay] .text-statement-widget,
+[data-dnd-kit-drag-overlay] .text-statement-widget,
+.page-builder [data-dnd-kit-drag-overlay] .image-choice-widget,
+[data-dnd-kit-drag-overlay] .image-choice-widget,
+.page-builder [data-dnd-kit-drag-overlay] .image-comparison-widget,
+[data-dnd-kit-drag-overlay] .image-comparison-widget,
+.page-builder [data-dnd-kit-drag-overlay] .audio-comparison-widget,
+[data-dnd-kit-drag-overlay] .audio-comparison-widget,
+.page-builder [data-dnd-kit-drag-overlay] .audio-true-false-widget,
+[data-dnd-kit-drag-overlay] .audio-true-false-widget {
+  /* Ensure full content is visible in drag overlay */
+  overflow: visible !important;
+  max-height: none !important;
+  height: auto !important;
+  min-height: auto !important;
+}
+
+/* Ensure text content in drag overlay is not clipped */
+.page-builder [data-dnd-kit-drag-overlay] .text-statement-widget > div,
+[data-dnd-kit-drag-overlay] .text-statement-widget > div {
+  overflow: visible !important;
+  max-height: none !important;
+  -webkit-line-clamp: none !important;
+  line-clamp: none !important;
+  display: block !important;
+  text-overflow: initial !important;
+}
+
+/* Ensure interactive widget containers in drag overlay are not constrained */
+.page-builder [data-dnd-kit-drag-overlay] .widget-resizable[data-element-type="text-statement"],
+[data-dnd-kit-drag-overlay] .widget-resizable[data-element-type="text-statement"],
+.page-builder [data-dnd-kit-drag-overlay] .widget-resizable[data-element-type="image-choice"],
+[data-dnd-kit-drag-overlay] .widget-resizable[data-element-type="image-choice"],
+.page-builder [data-dnd-kit-drag-overlay] .widget-resizable[data-element-type="image-comparison"],
+[data-dnd-kit-drag-overlay] .widget-resizable[data-element-type="image-comparison"],
+.page-builder [data-dnd-kit-drag-overlay] .widget-resizable[data-element-type="audio-comparison"],
+[data-dnd-kit-drag-overlay] .widget-resizable[data-element-type="audio-comparison"],
+.page-builder [data-dnd-kit-drag-overlay] .widget-resizable[data-element-type="audio-true-false"],
+[data-dnd-kit-drag-overlay] .widget-resizable[data-element-type="audio-true-false"] {
+  overflow: visible !important;
+  height: auto !important;
+  max-height: none !important;
+}
+
+

@@ -1,0 +1,67 @@
+/* Course Management Page Custom Styles */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Course card hover effects */
+.course-card-hover:hover {
+  transform: translateY(-2px);
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Custom scrollbar for better dark theme integration */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #374151;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #6B7280;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #9CA3AF;
+}
+
+/* Loading effect enhancement - using transition instead of keyframes */
+.pulse-glow {
+  opacity: 0.5;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.pulse-glow:hover {
+  opacity: 1;
+}
+
+/* Modal backdrop blur effect */
+.modal-backdrop-blur {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: rgba(17, 24, 39, 0.5); /* gray-900 with 50% opacity */
+}
+
+/* Fallback for browsers that don't support backdrop-filter */
+@supports not (backdrop-filter: blur(8px)) {
+  .modal-backdrop-blur {
+    background: rgba(17, 24, 39, 0.8); /* darker fallback */
+  }
+}

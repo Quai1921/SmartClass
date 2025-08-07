@@ -1,0 +1,308 @@
+/* ========================================
+   CONTAINER RESIZE HANDLES STYLES
+   ======================================== */
+
+/* Base resize handle styles for containers - Performance Optimized */
+.page-builder .resizable-container .resize-handle,
+.resizable-container .resize-handle,
+div.resizable-container .resize-handle,
+.resizable-container.selected .resize-handle {
+  position: absolute;
+  background: #3b82f6;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 6px;
+  z-index: 1005;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  transform-origin: center;
+  pointer-events: auto;
+  /* Simplified sizing for better performance */
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  min-height: 16px;
+  max-width: 16px;
+  max-height: 16px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Show handles when parent container is selected */
+.resizable-container.selected .resize-handle,
+.resizable-container.selected div.resize-handle {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Container resize handle hover effects - Performance Optimized */
+.resizable-container .resize-handle:hover {
+  background: #2563eb;
+  box-shadow: 0 3px 12px rgba(59, 130, 246, 0.4);
+  transform: scale(1.1);
+}
+
+.resizable-container .resize-handle:active {
+  background: #1d4ed8;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.5);
+  transform: scale(1.05);
+  transition: all 0.05s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Individual container resize handle positions */
+.resizable-container .resize-handle.resize-n,
+div.resizable-container .resize-handle.resize-n {
+  top: -9px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  cursor: ns-resize !important;
+  width: 32px !important;
+  height: 12px !important;
+  max-width: 32px !important;
+  max-height: 12px !important;
+  border-radius: 8px !important;
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+}
+
+.resizable-container .resize-handle.resize-ne,
+div.resizable-container .resize-handle.resize-ne {
+  top: -9px !important;
+  right: -9px !important;
+  cursor: nesw-resize !important;
+  width: 18px !important;
+  height: 18px !important;
+  max-width: 18px !important;
+  max-height: 18px !important;
+  border-radius: 8px !important;
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+}
+
+.resizable-container .resize-handle.resize-e,
+div.resizable-container .resize-handle.resize-e {
+  top: 50% !important;
+  right: -9px !important;
+  transform: translateY(-50%) !important;
+  cursor: ew-resize !important;
+  width: 12px !important;
+  height: 32px !important;
+  max-width: 12px !important;
+  max-height: 32px !important;
+  border-radius: 8px !important;
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+}
+
+.resizable-container .resize-handle.resize-se,
+div.resizable-container .resize-handle.resize-se {
+  bottom: -9px !important;
+  right: -9px !important;
+  cursor: nwse-resize !important;
+  width: 18px !important;
+  height: 18px !important;
+  max-width: 18px !important;
+  max-height: 18px !important;
+  border-radius: 8px !important;
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+}
+
+.resizable-container .resize-handle.resize-s,
+div.resizable-container .resize-handle.resize-s {
+  bottom: -9px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  cursor: ns-resize !important;
+  width: 32px !important;
+  height: 12px !important;
+  max-width: 32px !important;
+  max-height: 12px !important;
+  border-radius: 8px !important;
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+}
+
+.resizable-container .resize-handle.resize-sw,
+div.resizable-container .resize-handle.resize-sw {
+  bottom: -9px !important;
+  left: -9px !important;
+  cursor: nesw-resize !important;
+  width: 18px !important;
+  height: 18px !important;
+  max-width: 18px !important;
+  max-height: 18px !important;
+  border-radius: 8px !important;
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+}
+
+.resizable-container .resize-handle.resize-w,
+div.resizable-container .resize-handle.resize-w {
+  top: 50% !important;
+  left: -9px !important;
+  transform: translateY(-50%) !important;
+  cursor: ew-resize !important;
+  width: 12px !important;
+  height: 32px !important;
+  max-width: 12px !important;
+  max-height: 32px !important;
+  border-radius: 8px !important;
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+}
+
+.resizable-container .resize-handle.resize-nw,
+div.resizable-container .resize-handle.resize-nw {
+  top: -9px !important;
+  left: -9px !important;
+  cursor: nwse-resize !important;
+  width: 18px !important;
+  height: 18px !important;
+  max-width: 18px !important;
+  max-height: 18px !important;
+  border-radius: 8px !important;
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+}
+
+/* Container resize handle hover effects with proper transforms */
+.resizable-container .resize-handle.resize-n:hover,
+.resizable-container .resize-handle.resize-s:hover {
+  transform: translateX(-50%) scale(1.08) !important;
+}
+
+.resizable-container .resize-handle.resize-e:hover,
+.resizable-container .resize-handle.resize-w:hover {
+  transform: translateY(-50%) scale(1.08) !important;
+}
+
+.resizable-container .resize-handle.resize-n:active,
+.resizable-container .resize-handle.resize-s:active {
+  transform: translateX(-50%) scale(0.98) !important;
+}
+
+.resizable-container .resize-handle.resize-e:active,
+.resizable-container .resize-handle.resize-w:active {
+  transform: translateY(-50%) scale(0.98) !important;
+}
+
+/* Container corner handles hover/active states */
+.resizable-container .resize-handle.resize-ne:hover,
+.resizable-container .resize-handle.resize-se:hover,
+.resizable-container .resize-handle.resize-sw:hover,
+.resizable-container .resize-handle.resize-nw:hover {
+  transform: scale(1.08) !important;
+}
+
+.resizable-container .resize-handle.resize-ne:active,
+.resizable-container .resize-handle.resize-se:active,
+.resizable-container .resize-handle.resize-sw:active,
+.resizable-container .resize-handle.resize-nw:active {
+  transform: scale(0.98) !important;
+}
+
+/* Container resize handles - Professional Blue Theme */
+.resizable-container.selected .resize-handle {
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+  border: 2px solid rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 
+    0 4px 15px rgba(59, 130, 246, 0.3), 
+    0 2px 8px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+.resizable-container.selected .resize-handle:hover {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+  box-shadow: 
+    0 6px 20px rgba(59, 130, 246, 0.4), 
+    0 3px 12px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+.resizable-container.selected .resize-handle:active {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
+  box-shadow: 
+    0 4px 16px rgba(59, 130, 246, 0.5), 
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+/* CONTAINER RESIZE HANDLES - INVISIBLE HIT AREAS */
+
+/* Add larger invisible hit areas for better responsiveness */
+.resizable-container .resize-handle::before {
+  content: '' !important;
+  position: absolute !important;
+  top: -4px !important;
+  right: -4px !important;
+  bottom: -4px !important;
+  left: -4px !important;
+  z-index: -1 !important;
+  pointer-events: auto !important;
+  cursor: inherit !important;
+}
+
+/* Larger hit areas for container edge handles */
+.resizable-container .resize-handle.resize-n::before,
+.resizable-container .resize-handle.resize-s::before {
+  top: -6px !important;
+  bottom: -6px !important;
+  left: -8px !important;
+  right: -8px !important;
+}
+
+.resizable-container .resize-handle.resize-e::before,
+.resizable-container .resize-handle.resize-w::before {
+  top: -8px !important;
+  bottom: -8px !important;
+  left: -6px !important;
+  right: -6px !important;
+}
+
+/* Container corner handles get slightly larger hit areas */
+.resizable-container .resize-handle.resize-ne::before,
+.resizable-container .resize-handle.resize-nw::before,
+.resizable-container .resize-handle.resize-se::before,
+.resizable-container .resize-handle.resize-sw::before {
+  top: -6px !important;
+  right: -6px !important;
+  bottom: -6px !important;
+  left: -6px !important;
+}
+
+/* Container-specific reposition handle - ensure it appears above resize handles */
+.resizable-container .container-reposition-handle-debug,
+.resizable-container.selected .container-reposition-handle-debug,
+div.resizable-container .container-reposition-handle-debug,
+div.resizable-container.selected .container-reposition-handle-debug {
+  position: absolute !important;
+  top: -40px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 32px !important;
+  height: 20px !important;
+  min-width: 32px !important;
+  min-height: 20px !important;
+  max-width: 32px !important;
+  max-height: 20px !important;
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+  border: 2px solid rgba(255, 255, 255, 0.95) !important;
+  border-radius: 8px !important;
+  cursor: move !important;
+  z-index: 99999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: white !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  user-select: none !important;
+  box-sizing: border-box !important;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  outline: none !important;
+  text-decoration: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}

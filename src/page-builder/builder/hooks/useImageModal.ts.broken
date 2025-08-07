@@ -1,0 +1,312 @@
+import { useState, useCallback } from 'react';
+import { useBuilder } from '../../hooks/useBuilder';
+
+export const useImageModal = () => {
+  const [imageModalOpen, setImageModalOpen] = useState(false);
+  const [imageChoiceModalOpen, setImageChoiceModalOpen] = useState(false);
+  const [targetContainerId, setTargetContainerId] = useState<string | null>(null);
+  const [fileManagerImageUrl, setFileManagerImageUrl] = useState<string | null>(null);
+  const [imageModalContext, setImageModalContext] = useState<'ADD_ELEMENT' | 'SET_BACKGROUND'>('ADD_ELEMENT');
+  const [useAsBackground, setUseAsBackground] = useState(false);
+
+  const { addElement, updateElement, elements } = useBuilder();
+
+  const handleModalClose = useCallback(() => {
+    console.log('🚪 handleModalClose called - closing all modals');
+    console.log('🚪 Modal states before close:', {
+      imageModalOpen,
+      imageChoiceModalOpen,
+      targetContainerId
+    });
+    
+    setImageModalOpen(false);
+    setImageChoiceModalOpen(false);
+    setTargetContainerId(null);
+    setFileManagerImageUrl(null);
+    setImageModalContext('ADD_ELEMENT'); // Reset context to default
+    
+    console.log('🚪 Modal close completed');
+  }, [imageModalOpen, imageChoiceModalOpen, targetContainerId]);
+
+  // Open the choice modal first when image is dropped
+  const openImageChoiceModal = useCallback((containerId: string, context: 'ADD_ELEMENT' | 'SET_BACKGROUND' = 'ADD_ELEMENT') => {
+    console.log('🎯 openImageChoiceModal called:', { containerId, context });
+    setTargetContainerId(containerId);
+    setImageModalContext(context); // Set the context
+    
+    // Automatically set useAsBackground to true when context is SET_BACKGROUND
+    if (context === 'SET_BACKGROUND') {
+      setUseAsBackground(true);
+      console.log('🎯 useAsBackground set to true for SET_BACKGROUND context');
+    } else {
+      setUseAsBackground(false);
+      console.log('🎯 useAsBackground set to false for ADD_ELEMENT context');
+    }
+    
+    setImageChoiceModalOpen(true);
+  }, []);
+
+  const handleFileManagerImageUse = useCallback((imageUrl: string, useAsBackground: boolean) => {
+    console.log('🖼️ handleFileManagerImageUse called:', { imageUrl, useAsBackground, targetContainerId });
+    
+    if (targetContainerId) {
+      // Check if this is for a connection image node
+      const connectionCallback = (window as any).connectionImageCallback;
+      const connectionElementId = (window as any).connectionImageElementId;
+      
+      if (connectionCallback && connectionElementId === targetContainerId) {
+        console.log('🖼️ Using connection image callback for file manager image');
+        
+        // Extract filename from URL to use as alt text
+        const urlParts = imageUrl.split('/');
+        const filename = urlParts[urlParts.length - 1];
+        const altText = filename.replace(/\.[^/.]+$/, ''); // Remove extension
+        
+        console.log('🖼️ Extracted alt text from filename:', altText);
+        connectionCallback(imageUrl, altText);
+        // Clean up
+        (window as any).connectionImageCallback = null;
+        (window as any).connectionImageElementId = null;
+        handleModalClose();
+        return;
+      }
+      
+      if (useAsBackground) {
+        console.log('🖼️ Setting file manager image as background for container:', targetContainerId);
+        console.log('🖼️ Image URL:', imageUrl);
+        console.log('🖼️ URL type:', typeof imageUrl);
+        console.log('🖼️ URL length:', imageUrl.length);
+        
+        // Get the current container element to preserve its dimensions and position
+        const currentElement = elements.find(el => el.id === targetContainerId);
+        console.log('🖼️ Found current element:', !!currentElement);
+        console.log('🖼️ Current element properties before update:', currentElement?.properties);
+        
+        if (currentElement) {
+          const newProperties = {
+            ...currentElement.properties, // Preserve all existing properties
+            backgroundImage: `url(${imageUrl})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          };
+          
+          console.log('🖼️ New properties to apply:', newProperties);
+          console.log('🖼️ Background image value:', newProperties.backgroundImage);
+          
+          updateElement(targetContainerId, {
+            properties: newProperties
+          });
+          console.log('✅ Background image set from file manager successfully - dimensions and position preserved');
+          
+          // Verify the update after a short delay
+          setTimeout(() => {
+            const updatedElement = elements.find(el => el.id === targetContainerId);
+            console.log('🔍 Element after update:', {
+              id: updatedElement?.id,
+              backgroundImage: updatedElement?.properties.backgroundImage,
+              hasBackgroundImage: !!updatedElement?.properties.backgroundImage
+            });
+          }, 100);
+        } else {
+          console.error('❌ Could not find container element with ID:', targetContainerId);
+        }
+        }
+      } else {
+        console.log('🖼️ Creating image element from file manager with:', { src: imageUrl, containerId: targetContainerId });
+        const imageElement = {
+          id: crypto.randomUUID(),
+          type: 'image' as const,
+          name: 'Image',
+          parentId: targetContainerId,
+          properties: {
+            src: imageUrl,
+            alt: '',
+            width: 200,
+            height: 150,
+          },
+        };
+        
+        addElement(imageElement);
+        console.log('✅ Image element created from file manager successfully');
+      }
+    }
+    
+    handleModalClose();
+  }, [targetContainerId, elements, updateElement, addElement]);
+
+  // Handle choice: background or element (modified to check for file manager image)
+  const handleImageUseChoice = useCallback((useAsBackground: boolean, imageUrl?: string) => {
+    if (imageUrl || fileManagerImageUrl) {
+      // Use file manager selected image
+      const urlToUse = imageUrl || fileManagerImageUrl;
+      handleFileManagerImageUse(urlToUse!, useAsBackground);
+    } else {
+      // Normal flow - open image upload modal
+      setImageChoiceModalOpen(false);
+      setImageModalOpen(true);
+      setUseAsBackground(useAsBackground);
+    }
+  }, [fileManagerImageUrl, handleFileManagerImageUse]);
+
+  const [useAsBackground, setUseAsBackground] = useState(false);
+
+  const handleImageSelect = useCallback((src: string, alt?: string) => {
+    console.log('🖼️ handleImageSelect called:', { src, alt, targetContainerId, useAsBackground });
+    console.log('🔍 Original src:', src);
+    console.log('🔍 Window connection callback state:', {
+      hasCallback: !!(window as any).connectionImageCallback,
+      elementId: (window as any).connectionImageElementId,
+      targetMatches: (window as any).connectionImageElementId === targetContainerId
+    });
+    
+    // Check if this is for a connection image node
+    const connectionCallback = (window as any).connectionImageCallback;
+    const connectionElementId = (window as any).connectionImageElementId;
+    
+    if (connectionCallback && connectionElementId === targetContainerId) {
+      console.log('🖼️ Using connection image callback');
+      
+      // Extract filename from URL to use as alt text if not provided
+      let finalAlt = alt;
+      if (!finalAlt && src) {
+        const urlParts = src.split('/');
+        const filename = urlParts[urlParts.length - 1];
+        finalAlt = filename.replace(/\.[^/.]+$/, ''); // Remove extension
+        console.log('🖼️ Extracted alt text from filename:', finalAlt);
+      }
+      
+      connectionCallback(src, finalAlt);
+      // Clean up
+      (window as any).connectionImageCallback = null;
+      (window as any).connectionImageElementId = null;
+      handleModalClose();
+      return;
+    }
+    
+    // Use the URL as-is since it's already in the correct format
+    const transformedSrc = src;
+    
+    // Properly format the URL for CSS
+    let backgroundImageValue;
+    if (transformedSrc.startsWith('url(')) {
+      backgroundImageValue = transformedSrc;
+    } else {
+      // Quote the URL to handle special characters
+      backgroundImageValue = `url("${transformedSrc}")`;
+    }
+    console.log('🔍 Final backgroundImage value:', backgroundImageValue);
+    
+    if (targetContainerId) {
+      if (useAsBackground) {
+        console.log('🖼️ Setting image as background for container:', targetContainerId);
+        
+        // Test if the URL is accessible
+        const testImage = new Image();
+        testImage.onload = () => {
+          console.log('✅ Image URL is accessible and loads successfully');
+        };
+        testImage.onerror = (error) => {
+          console.error('❌ Image URL failed to load:', transformedSrc, error);
+        };
+        testImage.src = transformedSrc;
+        
+        // Test the CSS format directly
+        console.log('🧪 Testing CSS format:');
+        console.log('  - Original URL:', src);
+        console.log('  - Final CSS value:', backgroundImageValue);
+        console.log('  - CSS test:', `background-image: ${backgroundImageValue};`);
+        
+        // Create a test element to validate the CSS
+        const testDiv = document.createElement('div');
+        try {
+          testDiv.style.backgroundImage = backgroundImageValue.replace(/^url\("?/, '').replace(/"?\)$/, '');
+          testDiv.style.backgroundImage = `url("${testDiv.style.backgroundImage}")`;
+          console.log('✅ CSS format is valid');
+        } catch (error) {
+          console.error('❌ CSS format is invalid:', error);
+          // Try alternative format
+          try {
+            testDiv.style.backgroundImage = `url(${transformedSrc})`;
+            console.log('✅ Alternative CSS format works');
+            backgroundImageValue = `url(${transformedSrc})`;
+          } catch (altError) {
+            console.error('❌ Alternative format also failed:', altError);
+          }
+        }
+        
+        // Update container's background image
+        console.log('🔄 About to call updateElement with:', {
+          elementId: targetContainerId,
+          properties: {
+            backgroundImage: backgroundImageValue,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }
+        });
+        
+        updateElement(targetContainerId, {
+          properties: {
+            backgroundImage: backgroundImageValue,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }
+        });
+        console.log('✅ Background image set successfully');
+        
+        // Verify the element was updated
+        setTimeout(() => {
+          console.log('🔍 Checking if element was updated...');
+          const updatedElement = document.querySelector(`[data-element-id="${targetContainerId}"]`);
+          if (updatedElement) {
+            const computedStyle = window.getComputedStyle(updatedElement);
+            console.log('🔍 Element background-image after update:', computedStyle.backgroundImage);
+          }
+        }, 100);
+      } else {
+        console.log('🖼️ Creating image element with:', { src, alt, containerId: targetContainerId });
+        // Create image element
+        const imageElement = {
+          id: crypto.randomUUID(),
+          type: 'image' as const,
+          name: 'Image',
+          parentId: targetContainerId,
+          properties: {
+            src,
+            alt: alt || '',
+            width: 200,
+            height: 150,
+          },
+        };
+        
+        addElement(imageElement);
+        console.log('✅ Image element created successfully');
+      }
+    }
+    
+    handleModalClose();
+  }, [targetContainerId, useAsBackground, addElement, updateElement, handleModalClose]);
+
+  // Handle file manager selection (stores URL for choice modal)
+  const handleFileManagerSelect = useCallback((imageUrl: string) => {
+    setFileManagerImageUrl(imageUrl);
+    // The choice modal is already open, user will choose how to use the image
+  }, []);
+
+  return {
+    imageModalOpen,
+    imageChoiceModalOpen,
+    targetContainerId,
+    fileManagerImageUrl,
+    imageModalContext,
+    setImageModalOpen,
+    setTargetContainerId,
+    openImageChoiceModal,
+    handleImageUseChoice,
+    handleModalClose,
+    handleImageSelect,
+    handleFileManagerSelect,
+  };
+};

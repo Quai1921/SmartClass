@@ -1,0 +1,409 @@
+@import "tailwindcss";
+
+/* Google Fonts Import */
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap'); */
+
+/* Enhanced Inline Editor Styles */
+@import '../page-builder/styles/enhanced-inline-editor.css';
+
+/* Custom Font Import - Grilled Cheese BTN */
+@font-face {
+  font-family: 'GrilledCheese';
+  src: url('/grilledcheese-btn/GrilledCheese-BTN.woff2') format('woff2'),
+       url('/grilledcheese-btn/GrilledCheese-BTN.woff') format('woff'),
+       url('/grilledcheese-btn/GrilledCheese-BTN.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+@theme static {
+  --color-primary: var(--color-red-500);
+  --color-secondary: var(--color-blue-500);
+
+  /* colors figma */
+  --color-primary: #F5A623;
+  --color-secondary: #4CAF50;
+  --color-background: #0F1D2E;
+  --color-surface-variant: #49454F;
+  --color-surface2: #1D1B20 ;
+  --color-surface: #2B3646;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #B0B6C1;
+  --color-accent-blue: #0099FF ;
+  --color-seccess: #00C853 ;
+  --color-warning: #FFAB00 ;
+  --color-error: #FF5252 ;
+  --color-Zinc--500: #71717A;
+
+  /* fonts figma */
+  --font-poppins: 'Poppins', sans-serif;
+  --font-roboto: 'Roboto', sans-serif;
+  --text-font-size-xs: 12px;
+  --text-font-size-sm: 12px;
+  --text-font-size-md: 16px;
+  --text-font-size-lg: 20px;
+  --text-font-size-xl: 32px;
+
+
+  /* Body Small */
+  --body-small-font: 'Roboto', sans-serif;
+  --body-small-size: 12px;
+  --body-small-line-height: 16px;
+  --body-small-tracking: 0.4px;
+
+  /* Body Medium */
+  --body-medium-font: 'Roboto', sans-serif;
+  --body-medium-size: 14px;
+  --body-medium-line-height: 20px;
+  --body-medium-tracking: 0.25px;
+
+  /* Body Large */
+  --body-large-font: 'Roboto', sans-serif;
+  --body-large-size: 16px;
+  --body-large-line-height: 24px;
+  --body-large-tracking: 0.5px;
+
+  
+  /* Title Medium */
+  --title-medium-font: 'Roboto', sans-serif;
+  --title-medium-size: 16px;
+  --title-medium-line-height: 24px;
+  --title-medium-tracking: 0.15px;
+
+  /* Label Medium */
+  --label-medium-font: 'Roboto', sans-serif;
+  --label-medium-size: 12px;
+  --label-medium-line-height: 16px;
+  --label-medium-tracking: 0.5px;
+
+  /* Label Large */
+  --label-large-font: 'Roboto', sans-serif;
+  --label-large-size: 14px;
+  --label-large-line-height: 20px;
+  --label-large-tracking: 0.1px;
+
+  /* Lg */
+  --lg-font: 'Poppins', sans-serif;
+  --lg-size: 20px;
+  --lg-line-height: 150%;
+  --lg-spacing: 0%;
+
+  /* Geist Bold */
+--geist-bold-font: 'Geist', sans-serif;
+--geist-bold-weight: 600;
+--geist-bold-size: 18px;
+--geist-bold-line-height: 28px;
+--geist-bold-tracking: 0%;
+
+  /* Inter Medium */
+  --inter-medium-font: 'Inter', sans-serif;
+  --inter-medium-size: 14px;
+  --inter-medium-line-height: 100%;
+  --inter-medium-tracking: 0%;
+  --inter-medium-spacing: 0px;
+
+/* Text Sm / Medium - Inter */
+--text-sm-medium-font: 'Inter', sans-serif;
+--text-sm-medium-weight: 500;
+--text-sm-medium-size: 14px;
+--text-sm-medium-line-height: 100%;
+--text-sm-medium-tracking: 0px;
+
+
+/* Text Large / Bold - Geist */
+--text-lg-bold-font: 'Geist', sans-serif;
+--text-lg-bold-weight: 600;
+--text-lg-bold-size: 18px;
+--text-lg-bold-line-height: 28px;
+--text-lg-bold-tracking: 0px;
+
+/* Text XL / Bold - Geist */
+--text-xl-bold-font: 'Geist', sans-serif;
+--text-xl-bold-weight: 600;
+--text-xl-bold-size: 24px;
+--text-xl-bold-line-height: 32px;
+--text-xl-bold-tracking: 0px; /* Usa px para mejor compatibilidad */
+
+/* Text Base / Regular - Inter */
+--text-base-regular-font: 'Inter', sans-serif;
+--text-base-regular-weight: 400;
+--text-base-regular-size: 16px;
+--text-base-regular-line-height: 28px;
+--text-base-regular-tracking: 0px;
+
+
+  /* variebles propias */
+  /* Title font */
+  --title-main-font: 'Roboto', sans-serif;
+  --title-main-size: 32px;
+  --title-main-line-height: 150%;
+  --title-main-tracking: 0%;
+}
+
+
+body{
+  background-color: #f9fafb;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Allow text selection in input fields and editable content */
+input, 
+textarea, 
+[contenteditable="true"],
+[contenteditable=""],
+.selectable {
+  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+}
+
+.login-screen {
+  background-image: url('/assets/images/login-img.avif');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+/* Body Text Styles */
+.body-small {
+  font-family: var(--body-small-font);
+  font-size: var(--body-small-size);
+  line-height: var(--body-small-line-height);
+  letter-spacing: var(--body-small-tracking);
+  font-weight: 400;
+}
+
+.body-medium {
+  font-family: var(--body-medium-font);
+  font-size: var(--body-medium-size);
+  line-height: var(--body-medium-line-height);
+  letter-spacing: var(--body-medium-tracking);
+  font-weight: 400;
+}
+
+.body-large {
+  font-family: var(--body-large-font);
+  font-size: var(--body-large-size);
+  line-height: var(--body-large-line-height);
+  letter-spacing: var(--body-large-tracking);
+  font-weight: 400;
+}
+
+.title-medium {
+  font-family: var(--title-medium-font);
+  font-size: var(--title-medium-size);
+  line-height: var(--title-medium-line-height);
+  letter-spacing: var(--title-medium-tracking);
+  font-weight: 550;
+}
+
+.title-main {
+  font-family: var(--title-main-font);
+  font-size: var(--title-main-size);
+  line-height: var(--title-main-line-height);
+  letter-spacing: var(--title-main-tracking);
+  font-weight: 600;
+}
+
+.label-medium {
+  font-family: var(--label-medium-font);
+  font-size: var(--label-medium-size);
+  line-height: var(--label-medium-line-height);
+  letter-spacing: var(--label-medium-tracking);
+  font-weight: 550;
+}
+
+.lg {
+  font-family: var(--lg-font);
+  font-size: var(--lg-size);
+  line-height: var(--lg-line-height);
+  letter-spacing: var(--lg-spacing);
+  font-weight: 400;
+}
+
+[configuration]
+
+.geist-bold {
+  font-family: var(--geist-bold-font);
+  font-weight: var(--geist-bold-weight);
+  font-size: var(--geist-bold-size);
+  line-height: var(--geist-bold-line-height);
+  letter-spacing: var(--geist-bold-tracking);
+  font-weight: 900;
+}
+
+.inter-medium {
+  font-family: var(--inter-medium-font);
+  font-size: var(--inter-medium-size);
+  line-height: var(--inter-medium-line-height);
+  letter-spacing: var(--inter-medium-tracking);
+  font-weight: 500;
+}
+
+.text-sm-medium {
+  font-family: var(--text-sm-medium-font);
+  font-weight: var(--text-sm-medium-weight);
+  font-size: var(--text-sm-medium-size);
+  line-height: var(--text-sm-medium-line-height);
+  letter-spacing: var(--text-sm-medium-tracking);
+  font-weight: 500;
+}
+
+.text-lg-bold {
+  font-family: var(--text-lg-bold-font);
+  font-weight: var(--text-lg-bold-weight);
+  font-size: var(--text-lg-bold-size);
+  line-height: var(--text-lg-bold-line-height);
+  letter-spacing: var(--text-lg-bold-tracking);
+}
+
+.Text-2xl-Semi-Bold {
+  font-family: var(--text-xl-bold-font);
+  font-weight: var(--text-xl-bold-weight);
+  font-size: var(--text-xl-bold-size);
+  line-height: var(--text-xl-bold-line-height);
+  letter-spacing: var(--text-xl-bold-tracking);
+}
+
+.text-base-regular {
+  font-family: var(--text-base-regular-font);
+  font-weight: var(--text-base-regular-weight);
+  font-size: var(--text-base-regular-size);
+  line-height: var(--text-base-regular-line-height);
+  letter-spacing: var(--text-base-regular-tracking);
+}
+
+
+/*login*/
+.text-subtle {
+  color: #64748B;
+  font-family: 'Subtle', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0%;
+}
+
+.text-inter-500 {
+  color: #0F172A;
+  font-family: 'Subtle', sans-serif;
+  font-weight: 550;
+  font-size: 14px;
+  letter-spacing: 0%;
+}
+
+/* Force reposition handle styling with maximum priority - Professional Blue Theme */
+.container-reposition-handle-debug {
+  position: absolute !important;
+  top: -35px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 28px !important;
+  height: 20px !important;
+  min-width: 28px !important;
+  min-height: 20px !important;
+  max-width: 28px !important;
+  max-height: 20px !important;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8) !important;
+  border: 2px solid rgba(255, 255, 255, 0.9) !important;
+  border-radius: 10px !important;
+  cursor: move !important;
+  z-index: 1010 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: white !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  user-select: none !important;
+  box-sizing: border-box !important;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3), 0 2px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(8px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  outline: none !important;
+  text-decoration: none !important;
+  background-color: transparent !important;
+}
+
+.container-reposition-handle-debug:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
+  transform: translateX(-50%) scale(1.1) !important;
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4), 0 3px 10px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  border: 2px solid rgba(255, 255, 255, 1) !important;
+}
+
+/* Force widget reposition handle styling with maximum priority - Professional Blue Theme */
+.widget-reposition-handle-debug {
+  position: absolute !important;
+  top: -28px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 24px !important;
+  height: 16px !important;
+  min-width: 24px !important;
+  min-height: 16px !important;
+  max-width: 24px !important;
+  max-height: 16px !important;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8) !important;
+  border: 2px solid rgba(255, 255, 255, 0.9) !important;
+  border-radius: 8px !important;
+  cursor: move !important;
+  z-index: 1010 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: white !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  user-select: none !important;
+  box-sizing: border-box !important;
+  box-shadow: 0 3px 12px rgba(59, 130, 246, 0.3), 0 1px 6px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(6px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  outline: none !important;
+  text-decoration: none !important;
+}
+
+.widget-reposition-handle-debug:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
+  transform: translateX(-50%) scale(1.1) !important;
+  box-shadow: 0 5px 16px rgba(59, 130, 246, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  border: 2px solid rgba(255, 255, 255, 1) !important;
+}
+
+/* Font Utility Classes */
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+.font-roboto {
+  font-family: 'Roboto', sans-serif;
+}
+
+.font-grilled-cheese {
+  font-family: 'GrilledCheese', cursive, sans-serif;
+}
+
+/* Font Weight Classes */
+.font-light { font-weight: 300; }
+.font-normal { font-weight: 400; }
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+

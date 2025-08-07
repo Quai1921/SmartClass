@@ -1,0 +1,112 @@
+/* ========================================
+   PAGE BUILDER STYLES - MAIN INDEX
+   ======================================== */
+
+/* Import all partitioned style files */
+@import './layout.css';
+@import './drag-drop.css'; 
+@import './widgets.css';
+@import './resize-handles-containers.css';
+@import './widget-resize-styles.css';
+@import './containers.css';
+@import './flexbox-controls.css';
+
+/* Additional global overrides and utilities can go here */
+
+/* Support for content-based sizing when explicitly set */
+.widget-resizable.width-max-content {
+  width: max-content !important;
+  display: inline-block !important;
+}
+
+.widget-resizable.height-max-content {
+  height: max-content !important;
+}
+
+/* When element wrapper contains content-sized widgets */
+.element-wrapper:has(.widget-resizable.width-max-content) {
+  width: max-content !important;
+  display: inline-block !important;
+}
+
+/* Override text content width when parent uses max-content */
+.widget-resizable.width-max-content p,
+.widget-resizable.width-max-content h1,
+.widget-resizable.width-max-content h2,
+.widget-resizable.width-max-content h3,
+.widget-resizable.width-max-content h4,
+.widget-resizable.width-max-content h5,
+.widget-resizable.width-max-content h6 {
+  width: max-content !important;
+}
+/* Force CSS reload - Tue, Jul  1, 2025  5:28:15 PM */
+
+/* Unified Subtle Custom Scrollbar for Property Panel and Sidebar */
+.property-panel,
+.property-panel-wide,
+.property-panel-extra-wide,
+.property-panel-content,
+.sidebar,
+.sidebar .tab-content,
+.sidebar-course-manager,
+.elements-tab,
+.layers-tab {
+  scrollbar-width: thin;
+  scrollbar-color: #334155 #1e2530;
+}
+
+.property-panel::-webkit-scrollbar,
+.property-panel-wide::-webkit-scrollbar,
+.property-panel-extra-wide::-webkit-scrollbar,
+.property-panel-content::-webkit-scrollbar,
+.sidebar::-webkit-scrollbar,
+.sidebar .tab-content::-webkit-scrollbar,
+.sidebar-course-manager::-webkit-scrollbar,
+.elements-tab::-webkit-scrollbar,
+.layers-tab::-webkit-scrollbar {
+  width: 6px;
+  background: #1e2530;
+}
+
+.property-panel::-webkit-scrollbar-thumb,
+.property-panel-wide::-webkit-scrollbar-thumb,
+.property-panel-extra-wide::-webkit-scrollbar-thumb,
+.property-panel-content::-webkit-scrollbar-thumb,
+.sidebar::-webkit-scrollbar-thumb,
+.sidebar .tab-content::-webkit-scrollbar-thumb,
+.sidebar-course-manager::-webkit-scrollbar-thumb,
+.elements-tab::-webkit-scrollbar-thumb,
+.layers-tab::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 8px;
+  border: 1px solid #1e2530;
+  min-height: 30px;
+  transition: background 0.2s;
+}
+
+.property-panel::-webkit-scrollbar-thumb:hover,
+.property-panel-wide::-webkit-scrollbar-thumb:hover,
+.property-panel-extra-wide::-webkit-scrollbar-thumb:hover,
+.property-panel-content::-webkit-scrollbar-thumb:hover,
+.sidebar::-webkit-scrollbar-thumb:hover,
+.sidebar .tab-content::-webkit-scrollbar-thumb:hover,
+.sidebar-course-manager::-webkit-scrollbar-thumb:hover,
+.elements-tab::-webkit-scrollbar-thumb:hover,
+.layers-tab::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+.property-panel::-webkit-scrollbar-track,
+.property-panel-wide::-webkit-scrollbar-track,
+.property-panel-extra-wide::-webkit-scrollbar-track,
+.property-panel-content::-webkit-scrollbar-track,
+.sidebar::-webkit-scrollbar-track,
+.sidebar .tab-content::-webkit-scrollbar-track,
+.sidebar-course-manager::-webkit-scrollbar-track,
+.elements-tab::-webkit-scrollbar-track,
+.layers-tab::-webkit-scrollbar-track {
+  background: #1e2530;
+  border-radius: 8px;
+}
+
+

@@ -1,0 +1,1018 @@
+/* ========================================
+   RESIZABLE WIDGET STYLES
+   ======================================== */
+
+/* Base resizable widget styles */
+.widget-resizable {
+  min-height: 30px;
+  min-width: 30px;
+  box-sizing: border-box;
+  overflow: hidden; /* Ensure content stays within bounds */
+  display: block; /* Use block instead of inline-block for better flex layout participation */
+  isolation: isolate;
+  border: none; /* No border by default */
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+  position: relative; /* Required for absolutely positioned resize handles */
+  
+  /* Ensure text content wraps properly and is fully contained */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  white-space: normal; /* Allow text wrapping */
+  text-overflow: ellipsis; /* Handle long text gracefully */
+  
+  /* Position will be set by inline styles from elementStyles.ts */
+  /* Don't override position here to allow proper container layout */
+}
+
+/* Ensure selected widgets allow resize handles to be visible */
+.widget-resizable.selected {
+  overflow: visible !important; /* Allow resize handles to be visible when selected */
+  position: relative !important;
+}
+
+/* Create a content container that constrains text while keeping handles visible */
+.widget-resizable.selected .element-content {
+  overflow: hidden !important; /* Always constrain content */
+  height: 100% !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  z-index: 1 !important;
+  /* Remove forced width to allow content-based sizing */
+}
+
+/* Text elements should respect container bounds but have content-based minimums */
+.widget-resizable[data-element-type="paragraph"],
+.widget-resizable[data-element-type="heading"],
+.widget-resizable[data-element-type="text"] {
+  /* Remove min-width: max-content to allow resize handler's calculated minimum to work */
+  min-height: fit-content; /* Minimum height based on content */
+  max-width: 100%; /* Respect parent container bounds */
+  overflow: hidden; /* Ensure content doesn't escape */
+  resize: both; /* Allow manual resizing */
+  display: block;
+}
+
+/* Ensure text elements cannot shrink below their content width */
+.widget-resizable[data-element-type="paragraph"] .element-content,
+.widget-resizable[data-element-type="heading"] .element-content,
+.widget-resizable[data-element-type="text"] .element-content {
+  /* Remove min-width: max-content to allow resize handler's calculated minimum to work */
+  /* Allow text wrapping when shrunk to longest word width */
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+}
+
+/* When explicitly sized (not auto), enforce bounds strictly */
+.widget-resizable[data-element-type="paragraph"]:not(.width-auto):not(.width-max-content),
+.widget-resizable[data-element-type="heading"]:not(.width-auto):not(.width-max-content),
+.widget-resizable[data-element-type="text"]:not(.width-auto):not(.width-max-content) {
+  min-width: 50px; /* Absolute minimum for usability */
+  overflow: hidden;
+}
+
+/* Ensure max-content sizing is respected even when selected */
+.widget-resizable.selected.width-max-content {
+  width: max-content !important;
+  display: inline-block !important; /* Only use inline-block for max-content width elements */
+}
+
+.widget-resizable.selected.height-max-content {
+  height: max-content !important;
+}
+
+/* Override base styles when using CSS keywords for sizing */
+.widget-resizable.width-max-content,
+.widget-resizable.min-content, 
+.widget-resizable.fit-content {
+  min-width: 20px !important; /* Minimum for readability */
+  min-height: 20px !important;
+  display: inline-block !important; /* Content-based sizing needs inline-block */
+}
+
+.widget-resizable.selected {
+  /* Use box-shadow instead of border to avoid conflicts with element borders */
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.8);
+  overflow: visible !important; /* Allow handles to show when selected */
+}
+
+/* Base content container overflow */
+.widget-resizable .element-content {
+  overflow: hidden;
+  height: 100% !important;
+  box-sizing: border-box;
+  /* Remove forced width to allow content-based sizing */
+}
+
+/* Ensure content is contained within widget bounds */
+.widget-resizable.selected .element-content {
+  overflow: hidden !important; /* Contain content within bounds */
+  height: 100% !important;
+  box-sizing: border-box !important;
+  /* Remove forced width to allow content-based sizing */
+}
+
+.widget-resizable.selected:hover {
+  /* Use box-shadow instead of border to avoid conflicts with element borders */
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.9);
+}
+
+.widget-resizable.selected.resizing {
+  overflow: visible !important; /* Allow handles to remain visible and interactive during resizing */
+  z-index: 25;
+}
+
+.widget-resizable.selected.repositioning {
+  cursor: move;
+  z-index: 30;
+}
+
+.widget-resizable.resizing {
+  /* Keep user-select disabled during resizing, but allow handles to be interactive */
+  user-select: none;
+}
+
+/* Ensure resize handles are interactive during resizing */
+.widget-resizable.resizing .resize-handle {
+  pointer-events: auto !important;
+  z-index: 1010 !important; /* Ensure handles stay above everything during resize */
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Text elements within resizable widgets - ensure proper containment and responsive behavior */
+.widget-resizable p,
+.widget-resizable [data-element-type="paragraph"],
+.widget-resizable h1,
+.widget-resizable h2,
+.widget-resizable h3,
+.widget-resizable h4,
+.widget-resizable h5,
+.widget-resizable h6,
+.widget-resizable span,
+.widget-resizable [data-element-type="quote"],
+.widget-resizable [data-element-type="heading"] {
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  height: 100% !important;
+  display: block !important;
+  line-height: 1.2 !important;
+  /* Text wrapping and containment - ALWAYS constrain text */
+  overflow: hidden !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+  white-space: normal !important;
+  /* Prevent text from exceeding container bounds */
+  max-width: 100% !important;
+  max-height: 100% !important;
+  /* Ensure text respects container dimensions */
+  text-overflow: ellipsis !important;
+  /* Prevent drag initiation on text content */
+  -webkit-user-drag: none !important;
+  -moz-user-drag: none !important;
+  -o-user-drag: none !important;
+  user-drag: none !important;
+  /* Allow pointer events for selection but not drag */
+  pointer-events: auto !important;
+  /* Prevent text selection during drag operations */
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  /* Force text to stay within bounds even when selected */
+  position: relative !important;
+  z-index: 1 !important;
+  /* Remove forced width to allow content-based sizing */
+}
+
+/* Content-based sizing for specific scenarios */
+.widget-resizable.width-max-content p,
+.widget-resizable.min-content p,
+.widget-resizable.fit-content p,
+.widget-resizable.width-max-content [data-element-type="paragraph"],
+.widget-resizable.min-content [data-element-type="paragraph"],
+.widget-resizable.fit-content [data-element-type="paragraph"],
+.widget-resizable.width-max-content [data-element-type="heading"],
+.widget-resizable.min-content [data-element-type="heading"],
+.widget-resizable.fit-content [data-element-type="heading"] {
+  width: auto !important;
+  /* Remove min-width: max-content to allow resize handler's calculated minimum to work */
+  white-space: nowrap !important; /* For max-content, prevent wrapping */
+}
+
+/* Container optimizations for text elements */
+.widget-resizable[data-element-type="paragraph"],
+.widget-resizable[data-element-type="heading"],
+.widget-resizable[data-element-type="text"] {
+  min-height: 25px !important; /* Increased from 20px */
+  overflow: hidden; /* Ensure content stays within bounds */
+  display: block; /* Ensure block display for proper sizing */
+  word-wrap: break-word; /* Break long words */
+  overflow-wrap: break-word; /* Modern browsers */
+  /* Ensure proper text containment */
+  box-sizing: border-box !important;
+}
+
+/* Ensure selected text elements allow resize handles to be visible */
+.widget-resizable.selected[data-element-type="paragraph"],
+.widget-resizable.selected[data-element-type="heading"],
+.widget-resizable.selected[data-element-type="text"],
+.widget-resizable.selected[data-element-type="quote"] {
+  overflow: visible !important; /* Allow resize handles to be visible when selected */
+  z-index: 1000; /* Ensure selected elements are above others */
+}
+
+/* Content wrapper ensures text is constrained while handles remain visible */
+
+/* Enhanced constraint for explicit sizing */
+.widget-resizable[data-element-type="paragraph"]:not(.width-auto):not(.width-max-content):not(.width-fit-content),
+.widget-resizable[data-element-type="heading"]:not(.width-auto):not(.width-max-content):not(.width-fit-content),
+.widget-resizable[data-element-type="text"]:not(.width-auto):not(.width-max-content):not(.width-fit-content) {
+  /* Remove min-width: 60px to allow resize handler's calculated minimum to work */
+  max-width: 100% !important; /* Respect container bounds */
+  overflow: hidden !important; /* Force containment */
+}
+
+/* Override overflow for selected elements to allow resize handles */
+.widget-resizable.selected[data-element-type="paragraph"]:not(.width-auto):not(.width-max-content):not(.width-fit-content),
+.widget-resizable.selected[data-element-type="heading"]:not(.width-auto):not(.width-max-content):not(.width-fit-content),
+.widget-resizable.selected[data-element-type="text"]:not(.width-auto):not(.width-max-content):not(.width-fit-content) {
+  overflow: visible !important; /* Allow resize handles when selected */
+}
+
+/* When paragraph has explicit dimensions, ensure proper containment */
+.widget-resizable[data-element-type="paragraph"]:not(.width-max-content) {
+  display: block;
+}
+
+.widget-resizable[data-element-type="paragraph"]:not(.width-max-content) p {
+  width: 100% !important;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Override paragraph constraints when using CSS keywords */
+.widget-resizable[data-element-type="paragraph"].width-max-content,
+.widget-resizable[data-element-type="paragraph"].min-content,
+.widget-resizable[data-element-type="paragraph"].fit-content {
+  /* Remove min-width: max-content to allow resize handler's calculated minimum to work */
+  min-height: fit-content !important;
+  width: max-content !important;
+}
+
+/* Ensure paragraphs inside widgets behave correctly with responsive text */
+.widget-resizable[data-element-type="paragraph"] p {
+  display: block !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  width: auto !important;
+  height: auto !important;
+  box-sizing: border-box !important;
+  font-size: clamp(10px, 2vw, 16px) !important;
+  line-height: 1.3 !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+  hyphens: auto !important;
+  white-space: pre-wrap !important;
+}
+
+/* Button widget specific styles */
+.widget-resizable.widget-button {
+  display: inline-block;
+  min-width: 0;
+  min-height: 0;
+  width: fit-content;
+  height: fit-content;
+  padding: 0;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.widget-resizable.widget-button.selected {
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.widget-resizable.widget-button button {
+  /* Only keep essential layout properties, no visual styling */
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* All other styling is handled via inline styles */
+}
+
+/* Button hover styles are now controlled by inline styles from templates */
+
+/* Image widget styles */
+.widget-resizable img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Inline editing styles */
+.widget-resizable textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
+  padding: 4px 8px;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+/* Flexbox participation for widgets inside containers */
+.container-content .widget-resizable {
+  /* Ensure widgets inside containers participate in flexbox properly */
+  flex-shrink: 0; /* Don't shrink smaller than min-content */
+  flex-grow: 0;   /* Don't grow by default */
+  
+  /* For text-based widgets, allow them to take available width */
+}
+
+.container-content .widget-resizable[data-element-type="heading"],
+.container-content .widget-resizable[data-element-type="paragraph"],
+.container-content .widget-resizable[data-element-type="quote"] {
+  flex-grow: 1; /* Text widgets can grow to fill available space */
+  /* REMOVED: width: 100%; - Let inline styles control width */
+}
+
+.container-content .widget-resizable[data-element-type="button"] {
+  flex-grow: 0; /* Buttons don't grow */
+  width: auto; /* Buttons use their intrinsic width */
+}
+
+/* Text-based widget specific styles */
+.widget-resizable[data-widget-type="text"],
+.widget-resizable[data-widget-type="title"],
+.widget-resizable[data-widget-type="subtitle"],
+.widget-resizable[data-widget-type="paragraph"] {
+  /* Ensure text widgets can shrink and wrap properly */
+  max-width: 100% !important;
+  flex-shrink: 1 !important;
+  flex-grow: 0 !important;
+  
+  /* Enhanced text wrapping for better flow */
+  white-space: pre-wrap; /* Preserve line breaks but allow wrapping */
+  word-break: break-word;
+  overflow-wrap: anywhere; /* More aggressive wrapping for long words */
+  hyphens: auto;
+  
+  /* Ensure content stays within bounds */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Specific text-based widget sizing - ensure content-based sizing */
+.widget-resizable[data-element-type="heading"],
+.widget-resizable[data-element-type="paragraph"],
+.widget-resizable[data-element-type="quote"] {
+  /* Use natural content sizing by default, but allow resize overrides */
+  display: inline-block !important;
+  /* Remove min-width: 50px to allow resize handler's calculated minimum to work */
+  min-height: 30px !important;
+  max-width: 90vw !important; /* Prevent text from going off screen */
+  /* Don't force specific dimensions - let inline styles from resize handlers take precedence */
+}
+
+/* When text widgets are NOT selected, prefer natural content sizing */
+.widget-resizable[data-element-type="heading"]:not(.selected),
+.widget-resizable[data-element-type="paragraph"]:not(.selected),
+.widget-resizable[data-element-type="quote"]:not(.selected) {
+  /* Only use content sizing if no explicit dimensions are set */
+  /* REMOVED: width: var(--element-width, max-content); - Let inline styles control width */
+  /* REMOVED: height: var(--element-height, max-content); - Let inline styles control height */
+  display: inline-block !important;
+  /* Prevent text from going off screen */
+  max-width: 90vw !important;
+}
+
+/* When text widgets are selected, allow resizing while maintaining natural text flow */
+.widget-resizable[data-element-type="heading"].selected,
+.widget-resizable[data-element-type="paragraph"].selected,
+.widget-resizable[data-element-type="quote"].selected {
+  /* Allow manual sizing while selected for editing */
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  /* Ensure min dimensions for usability but don't override resize values */
+  min-width: 50px !important;
+  min-height: 30px !important;
+  /* Allow content to flow naturally */
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  /* Allow resize handles to show */
+  overflow: visible !important;
+}
+
+/* Text widgets in flex containers should be more flexible */
+.container-content[style*="display: flex"] .widget-resizable[data-widget-type="text"],
+.container-content[style*="display: flex"] .widget-resizable[data-widget-type="title"],
+.container-content[style*="display: flex"] .widget-resizable[data-widget-type="subtitle"],
+.container-content[style*="display: flex"] .widget-resizable[data-widget-type="paragraph"] {
+  flex-basis: auto !important;
+  min-width: 0 !important; /* Allow shrinking below content size */
+  width: auto !important; /* Let flex container control width */
+}
+
+/* ========================================
+   INTERACTIVE WIDGET STYLES (TextStatement & ImageChoice)
+   ======================================== */
+
+/* HIGH SPECIFICITY: Override container and text-based width forcing rules for interactive widgets */
+.container-content .widget-resizable[data-element-type="text-statement"],
+.container-content .widget-resizable[data-element-type="image-choice"],
+.container-content .widget-resizable[data-element-type="image-comparison"],
+.container-content .widget-resizable[data-element-type="audio-comparison"],
+.container-content .widget-resizable[data-element-type="single-choice"],
+.container-content .widget-resizable[data-element-type="text-statement"],
+.container-content .widget-resizable[data-element-type="image-choice"], 
+.container-content .widget-resizable[data-element-type="image-comparison"],
+.container-content .widget-resizable[data-element-type="audio-comparison"],
+.container-content .widget-resizable[data-element-type="single-choice"],
+.widget-resizable.selected[data-element-type="text-statement"],
+.widget-resizable.selected[data-element-type="image-choice"],
+.widget-resizable.selected[data-element-type="image-comparison"],
+.widget-resizable.selected[data-element-type="audio-comparison"],
+.widget-resizable.selected[data-element-type="single-choice"] {
+  /* Override flex and width forcing from container rules */
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+  display: block !important; /* Override flex display */
+  max-width: none !important; /* Remove max-width constraints */
+  min-width: 200px !important; /* Reasonable minimum for interactive widgets */
+  min-height: 100px !important; /* Reasonable minimum for interactive widgets */
+}
+
+/* Special handling for auto-sizing widgets in containers */
+.container-content .widget-resizable[data-element-type="audio-true-false"],
+.container-content .widget-resizable[data-element-type="single-choice"],
+.widget-resizable.selected[data-element-type="audio-true-false"],
+.widget-resizable.selected[data-element-type="single-choice"] {
+  /* Override flex and width forcing from container rules */
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+  width: auto !important; /* Auto width to fit content */
+  height: auto !important; /* Auto height to fit content */
+  display: inline-flex !important; /* Use inline-flex for proper sizing */
+  max-width: none !important; /* Remove max-width constraints */
+  min-width: 120px !important; /* Smaller minimum for auto-sizing widgets */
+  min-height: 80px !important; /* Smaller minimum for auto-sizing widgets */
+}
+
+/* Prevent interactive widgets from being affected by text widget width rules */
+.widget-resizable[data-element-type="text-statement"],
+.widget-resizable[data-element-type="image-choice"],
+.widget-resizable[data-element-type="image-comparison"],
+.widget-resizable[data-element-type="audio-comparison"] {
+  display: inline-block !important; /* Shrink to content size */
+  flex-grow: 0 !important;
+  min-width: 200px !important;
+  min-height: 100px !important;
+  max-width: none !important;
+}
+
+/* Special handling for audio-true-false to prevent width issues */
+.widget-resizable[data-element-type="audio-true-false"] {
+  width: auto !important;
+  height: auto !important;
+  display: inline-flex !important; /* Use inline-flex to fit content */
+  flex-grow: 0 !important;
+  min-width: 120px !important;
+  min-height: 80px !important;
+  max-width: none !important;
+}
+
+/* Override selected text element behavior specifically for interactive widgets */
+.widget-resizable[data-element-type="text-statement"].selected,
+.widget-resizable[data-element-type="image-choice"].selected,
+.widget-resizable[data-element-type="image-comparison"].selected,
+.widget-resizable[data-element-type="audio-comparison"].selected {
+  display: inline-block !important; /* Keep inline-block when selected */
+  align-items: unset !important;
+  justify-content: unset !important;
+  overflow: visible !important; /* Allow resize handles to show */
+}
+
+/* Special handling for audio-true-false selected state */
+.widget-resizable[data-element-type="audio-true-false"].selected {
+  display: inline-flex !important; /* Keep inline-flex when selected */
+  align-items: unset !important;
+  justify-content: unset !important;
+  overflow: visible !important; /* Allow resize handles to show */
+}
+
+/* HIGH SPECIFICITY OVERRIDES FOR INTERACTIVE WIDGET CONTAINER */
+.resizable-container[data-element-type="text-statement"],
+.resizable-container[data-element-type="image-choice"],
+.resizable-container[data-element-type="image-comparison"],
+.resizable-container[data-element-type="audio-comparison"] {
+  display: inline-block !important;
+  box-sizing: border-box !important;
+}
+
+/* Special handling for audio-true-false container */
+.resizable-container[data-element-type="audio-true-false"] {
+  display: inline-flex !important;
+  width: auto !important;
+  height: auto !important;
+  box-sizing: border-box !important;
+}
+
+.resizable-container[data-element-type="text-statement"].selected,
+.resizable-container[data-element-type="image-choice"].selected,
+.resizable-container[data-element-type="image-comparison"].selected,
+.resizable-container[data-element-type="audio-comparison"].selected {
+  display: inline-block !important;
+  overflow: visible !important;
+}
+
+/* Special handling for audio-true-false container selected state */
+.resizable-container[data-element-type="audio-true-false"].selected {
+  display: inline-flex !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+/* Override widget-resizable inside interactive resizable-containers */
+.resizable-container[data-element-type="text-statement"] .widget-resizable,
+.resizable-container[data-element-type="image-choice"] .widget-resizable,
+.resizable-container[data-element-type="image-comparison"] .widget-resizable,
+.resizable-container[data-element-type="audio-comparison"] .widget-resizable,
+.resizable-container[data-element-type="audio-true-false"] .widget-resizable {
+  display: inline-block !important;
+  box-sizing: border-box !important;
+}
+
+/* When selected, keep widget-resizable inline-block */
+.resizable-container[data-element-type="text-statement"].selected .widget-resizable,
+.resizable-container[data-element-type="image-choice"].selected .widget-resizable,
+.resizable-container[data-element-type="image-comparison"].selected .widget-resizable,
+.resizable-container[data-element-type="audio-comparison"].selected .widget-resizable,
+.resizable-container[data-element-type="audio-true-false"].selected .widget-resizable {
+  display: inline-block !important;
+}
+
+/* FIX: Prevent interactive resizable-container from stretching in flex containers */
+.container-content .resizable-container[data-element-type="text-statement"],
+.container-content .resizable-container[data-element-type="image-choice"],
+.container-content .resizable-container[data-element-type="image-comparison"],
+.container-content .resizable-container[data-element-type="audio-comparison"],
+.container-content .resizable-container[data-element-type="single-choice"] {
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+  display: inline-block !important;
+  /* REMOVED: width: var(--element-width) !important; - Let inline styles control width */
+  /* REMOVED: height: var(--element-height) !important; - Let inline styles control height */
+}
+
+/* Special handling for audio-true-false to prevent width issues */
+.container-content .resizable-container[data-element-type="audio-true-false"] {
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+  display: inline-flex !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+/* Base styles for interactive widgets */
+.text-statement-widget,
+.image-choice-widget,
+.image-comparison-widget,
+.audio-comparison-widget {
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+/* Smooth transitions for content state changes */
+.text-statement-widget > *,
+.image-choice-widget > *,
+.image-comparison-widget > *,
+.audio-comparison-widget > * {
+  transition: all 0.3s ease;
+}
+
+/* Button hover and interaction styles */
+.text-statement-widget button,
+.image-choice-widget button,
+.image-comparison-widget button,
+.audio-comparison-widget button {
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.text-statement-widget button:hover:not(:disabled),
+.image-choice-widget button:hover:not(:disabled),
+.image-comparison-widget button:hover:not(:disabled),
+.audio-comparison-widget button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.text-statement-widget button:active:not(:disabled),
+.image-choice-widget button:active:not(:disabled),
+.image-comparison-widget button:active:not(:disabled),
+.audio-comparison-widget button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.text-statement-widget button:disabled,
+.image-choice-widget button:disabled,
+.image-comparison-widget button:disabled,
+.audio-comparison-widget button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Smooth transitions for result display */
+.text-statement-widget .text-center,
+.image-choice-widget .text-center,
+.image-comparison-widget .text-center,
+.audio-comparison-widget .text-center {
+  animation: fadeInUp 0.4s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Text overflow handling for compact layouts */
+.text-statement-widget [style*="-webkit-line-clamp"],
+.image-choice-widget [style*="-webkit-line-clamp"],
+.image-comparison-widget [style*="-webkit-line-clamp"],
+.audio-comparison-widget [style*="-webkit-line-clamp"] {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Image responsive behavior in choice widgets */
+.image-choice-widget img,
+.image-comparison-widget img {
+  transition: all 0.3s ease;
+  border-radius: 6px;
+}
+
+.image-choice-widget img:hover,
+.image-comparison-widget img:hover {
+  transform: scale(1.02);
+}
+
+/* Ensure proper scrolling for overflow content */
+.text-statement-widget [style*="overflow: auto"],
+.image-choice-widget [style*="overflow: auto"],
+.image-comparison-widget [style*="overflow: auto"],
+.audio-comparison-widget [style*="overflow: auto"] {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+}
+
+.text-statement-widget [style*="overflow: auto"]::-webkit-scrollbar,
+.image-choice-widget [style*="overflow: auto"]::-webkit-scrollbar,
+.image-comparison-widget [style*="overflow: auto"]::-webkit-scrollbar,
+.audio-comparison-widget [style*="overflow: auto"]::-webkit-scrollbar {
+  width: 4px;
+}
+
+.text-statement-widget [style*="overflow: auto"]::-webkit-scrollbar-track,
+.image-choice-widget [style*="overflow: auto"]::-webkit-scrollbar-track,
+.image-comparison-widget [style*="overflow: auto"]::-webkit-scrollbar-track,
+.audio-comparison-widget [style*="overflow: auto"]::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.text-statement-widget [style*="overflow: auto"]::-webkit-scrollbar-thumb,
+.image-choice-widget [style*="overflow: auto"]::-webkit-scrollbar-thumb,
+.image-comparison-widget [style*="overflow: auto"]::-webkit-scrollbar-thumb,
+.audio-comparison-widget [style*="overflow: auto"]::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.5);
+  border-radius: 2px;
+}
+
+.text-statement-widget [style*="overflow: auto"]::-webkit-scrollbar-thumb:hover,
+.image-choice-widget [style*="overflow: auto"]::-webkit-scrollbar-thumb:hover,
+.image-comparison-widget [style*="overflow: auto"]::-webkit-scrollbar-thumb:hover,
+.audio-comparison-widget [style*="overflow: auto"]::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(156, 163, 175, 0.7);
+}
+
+/* ========================================
+   SELECTION BORDER FIXES FOR INTERACTIVE WIDGETS
+   ======================================== */
+
+/* Ensure interactive widgets properly trigger border updates */
+.text-statement-widget[style*="border"][data-selected="true"],
+.image-choice-widget[style*="border"][data-selected="true"],
+.image-comparison-widget[style*="border"][data-selected="true"],
+.audio-comparison-widget[style*="border"][data-selected="true"] {
+  /* Force GPU acceleration for smooth border updates */
+  transform: translateZ(0);
+  will-change: border, box-shadow;
+}
+
+/* Custom selection borders for interactive widgets that override default */
+.text-statement-widget[style*="border: 2px solid rgb(59, 130, 246)"],
+.image-choice-widget[style*="border: 2px solid rgb(59, 130, 246)"],
+.image-comparison-widget[style*="border: 2px solid rgb(59, 130, 246)"],
+.audio-comparison-widget[style*="border: 2px solid rgb(59, 130, 246)"] {
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.3), 
+              0 0 10px rgba(59, 130, 246, 0.2) !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Ensure content changes trigger layout updates */
+.text-statement-widget > *,
+.image-choice-widget > *,
+.image-comparison-widget > *,
+.audio-comparison-widget > * {
+  will-change: transform;
+}
+
+/* Force layout recalculation when result is shown */
+.text-statement-widget:has(.text-center),
+.image-choice-widget:has(.text-center),
+.image-comparison-widget:has(.text-center),
+.audio-comparison-widget:has(.text-center) {
+  contain: layout;
+}
+
+/* Performance optimizations for interactive widget state changes */
+.text-statement-widget,
+.image-choice-widget,
+.image-comparison-widget,
+.audio-comparison-widget {
+  contain: style layout;
+  isolation: isolate;
+}
+
+/* ========================================
+   AUDIO TRUE/FALSE WIDGET STYLES
+   ======================================== */
+
+/* Base styles for audio true/false widget */
+.audio-true-false-widget {
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  display: inline-flex !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+/* Smooth transitions for content state changes */
+.audio-true-false-widget > * {
+  transition: all 0.3s ease;
+}
+
+/* Button hover and interaction styles */
+.audio-true-false-widget button {
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.audio-true-false-widget button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.audio-true-false-widget button:active:not(:disabled) {
+  /* Removed transform and box-shadow changes to prevent shrinking effect */
+  /* Keep the hover state active during click */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.audio-true-false-widget button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Smooth transitions for result display */
+.audio-true-false-widget .text-center {
+  animation: fadeInUp 0.4s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Audio icon animations */
+.audio-true-false-widget .audio-icon {
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.audio-true-false-widget .audio-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Button container styling */
+.audio-true-false-widget > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Selection border fixes for audio true/false widget */
+.audio-true-false-widget[style*="border"][data-selected="true"] {
+  transform: translateZ(0);
+  will-change: border, box-shadow;
+}
+
+.audio-true-false-widget[style*="border: 2px solid rgb(59, 130, 246)"] {
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.3), 
+              0 0 10px rgba(59, 130, 246, 0.2) !important;
+  transition: all 0.2s ease !important;
+}
+
+/* FIX: Ensure dropzones can detect dragged elements properly */
+.container-dropzone,
+.grid-cell {
+  position: relative;
+  z-index: 600 !important; /* Higher than dragged elements (500) */
+}
+
+.container-dropzone.highlight,
+.grid-cell.highlight {
+  z-index: 700 !important; /* Even higher when active */
+}
+
+/* Ensure dropzone detection works over dragged elements */
+.container-dropzone:hover,
+.grid-cell:hover {
+  z-index: 650 !important;
+}
+
+/* FIX: Prevent interactive resizable-container from stretching in flex containers */
+.container-content .resizable-container[data-element-type="text-statement"],
+.container-content .resizable-container[data-element-type="image-choice"],
+.container-content .resizable-container[data-element-type="image-comparison"],
+.container-content .resizable-container[data-element-type="audio-comparison"] {
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+  display: inline-block !important;
+  /* REMOVED: width: var(--element-width) !important; - Let inline styles control width */
+  /* REMOVED: height: var(--element-height) !important; - Let inline styles control height */
+}
+
+/* Special handling for audio-true-false to prevent width issues */
+.container-content .resizable-container[data-element-type="audio-true-false"] {
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+  display: inline-flex !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+/* NUCLEAR OPTION: Force audio-true-false wrapper to auto-size with maximum specificity */
+.widget-resizable[data-element-type="audio-true-false"].selected,
+.widget-resizable[data-element-type="audio-true-false"]:not(.force-width) {
+  width: auto !important;
+  height: auto !important;
+  display: inline-flex !important;
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+  max-width: none !important;
+  min-width: 120px !important;
+  min-height: 80px !important;
+}
+
+/* Also target the resizable container wrapper */
+.resizable-container[data-element-type="audio-true-false"] {
+  width: auto !important;
+  height: auto !important;
+  display: inline-flex !important;
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+/* Hide resize handles for audio-true-false to prevent any resize interactions */
+.widget-resizable[data-element-type="audio-true-false"] .resize-handle {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* DEBUG: Visual indicator for audio-true-false wrapper debugging */
+.widget-resizable[data-element-type="audio-true-false"]:after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px dashed red;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* AGGRESSIVE FIX: Maximum specificity override for audio-true-false wrapper */
+html body .page-builder .widget-resizable[data-element-type="audio-true-false"],
+html body .page-builder .widget-resizable[data-element-type="audio-true-false"].selected,
+html body .widget-resizable[data-element-type="audio-true-false"],
+html body .widget-resizable[data-element-type="audio-true-false"].selected {
+  width: auto !important;
+  height: auto !important;
+  display: inline-flex !important;
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+  max-width: none !important;
+  min-width: 120px !important;
+  min-height: 80px !important;
+}
+
+/* Force resize handles to be hidden with maximum specificity */
+html body .page-builder .widget-resizable[data-element-type="audio-true-false"] .resize-handle,
+html body .widget-resizable[data-element-type="audio-true-false"] .resize-handle {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+}
+
+/* ELEMENT WRAPPER: Force audio-true-false auto-sizing with ultimate specificity */
+html body .page-builder .widget-resizable[data-element-type="audio-true-false"],
+html body .page-builder .widget-resizable[data-element-type="audio-true-false"].selected,
+html body .widget-resizable[data-element-type="audio-true-false"],
+html body .widget-resizable[data-element-type="audio-true-false"].selected,
+div.widget-resizable[data-element-type="audio-true-false"],
+div[data-element-type="audio-true-false"].widget-resizable {
+  width: auto !important;
+  height: auto !important;
+  display: inline-flex !important;
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+  max-width: none !important;
+  min-width: 120px !important;
+  min-height: 80px !important;
+  position: relative !important;
+}
+
+/* Hide resize handles for audio-true-false widgets (they should auto-size) */
+.widget-resizable[data-element-type="audio-true-false"] .resize-handle {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+}
+
+/* Debug border for ElementWrapper */
+.widget-resizable[data-element-type="audio-true-false"]:after {
+  content: 'AUTO-SIZED (No Resize)';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px dashed green;
+  pointer-events: none;
+  z-index: 9999;
+  font-size: 10px;
+  color: green;
+  background: rgba(0, 255, 0, 0.1);
+}
